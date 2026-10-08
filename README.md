@@ -35,6 +35,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | ponytail | DietrichGebert/ponytail | 가장 단순한 해결책 모드. 과한 설계 리뷰(`ponytail-review`)와 레포 점검(`ponytail-audit`) 포함 |
 | superpowers | claude-plugins-official | 기획 → 계획 → TDD → 디버깅 → 검증 → 리뷰 순으로 진행하는 개발 규칙 모음 |
 | claude-code-setup | claude-plugins-official | 코드베이스를 분석해 훅·스킬·MCP·서브에이전트 추천 |
+| ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
 
 ## MCP
 
@@ -45,7 +46,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 ## 겹치는 것
 
 - **코드 리뷰:** `code-review`(기본, 버그), `ponytail-review`(과한 설계), `superpowers:requesting-code-review`. 원하는 쪽을 이름으로 부를 것.
-- **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검.
+- **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검, ui-ux-pro-max는 스타일·팔레트·폰트 데이터 검색. ui-ux-pro-max의 `design`·`ui-ux-pro-max` 스킬은 impeccable과 범위가 겹친다.
 
 ## 넣었다가 뺀 것
 
