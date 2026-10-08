@@ -1,188 +1,293 @@
 # 디자인 스킬 프롬프트 가이드
 
-주로 쓰는 스킬은 **impeccable**과 **design-taste-frontend** 두 개다. 나머지는 필요할 때만 이름을 불러서 쓴다.
+주로 쓰는 스킬: **impeccable**(만들기·고치기·점검) + **design-taste-frontend**(AI 티 안 나는 방향 잡기)
+보조 스킬: hallmark, ui-ux-pro-max, emil-design-eng, web-design-guidelines
+눈 역할: **Playwright MCP**(만든 화면을 브라우저로 직접 열어 보기)
 
-> 스킬 이름을 프롬프트에 넣으면 그 스킬이 확실히 쓰인다. 이름을 빼면 Claude가 고르는데, 디자인 스킬끼리 겹쳐서 매번 다를 수 있다.
+> 참고한 자료: [낭만빌더 셋업 가이드](https://sdk-kim-builds.com/guides/claude-web-design-skills-setup/), [바이브 메이커 디자인 스킬 5 PDF](https://docs.vibemake.kr/downloads/claude-design-skills5.pdf), [홍익맨 노션 배포자료](https://possible-timpani-b05.notion.site/5-3c9f67ccdbf88173ac08ee5183817752), 각 스킬의 SKILL.md
+
+---
+
+## 0. 프롬프트 잘 쓰는 8가지 규칙
+
+세 자료가 공통으로 말하는 것. 아래 프롬프트들은 전부 이 규칙으로 짜여 있다.
+
+| # | 규칙 | 왜 | 이렇게 쓴다 |
+|---|---|---|---|
+| 1 | **스킬 이름을 넣는다** | 이름이 없으면 Claude가 고르고, 디자인 스킬끼리 겹쳐서 매번 다르다 | `design-taste-frontend로 …`, `/impeccable polish …` |
+| 2 | **만들기 전에 확인받게 한다** | 방향이 틀리면 다 만든 뒤 고쳐도 소용없다 | "주제·손님·이 페이지가 할 일을 한 줄씩 먼저 정하고 **나한테 확인받아**" |
+| 3 | **하지 말 것을 적는다** | AI는 기준이 없으면 익숙한 기본값으로 돌아간다 | "같은 모양 카드 반복, 장식용 그라데이션, 기본 서체, 가운데 정렬 히어로는 쓰지 마" |
+| 4 | **"세련되게" 대신 숫자로** | 애매한 말은 어디로 얼마나 갈지 모른다 | "VARIANCE 7, MOTION 6, DENSITY 3" |
+| 5 | **브라우저로 보고 고치게 한다** | 코드만 보고는 여백·정렬·모바일 깨짐을 못 본다 | "Playwright로 열어서 스크린샷 보고 고쳐. **최소 2~3번 반복해**" |
+| 6 | **중요한 것부터** | 사소한 걸 먼저 고치다 큰 문제가 남는다 | "문제를 **중요도 순서로** 정리한 다음 고쳐" |
+| 7 | **단계마다 멈추게 한다** | 한 번에 다 바꾸면 뭐가 좋아졌는지 모른다 | "단계마다 세 줄로 보고하고, 내가 「다음」이라고 하면 넘어가" |
+| 8 | **결과 형식을 정한다** | 표·줄번호로 받으면 검토가 빠르다 | "전·후·이유 표로", "파일:줄 형식으로" |
 
 ---
 
 ## 1. 상황별로 고르기
 
-| 하고 싶은 일 | 쓸 스킬 | 프롬프트 시작 |
+| 하고 싶은 일 | 먼저 꺼낼 스킬 | 바로 쓸 프롬프트 |
 |---|---|---|
-| 새 랜딩·포트폴리오 페이지 만들기 | design-taste-frontend | `design-taste-frontend로 ...` |
-| 새 앱 화면·대시보드 만들기 | impeccable | `/impeccable ...` |
-| 만들기 전에 기획부터 | impeccable | `/impeccable shape ...` |
-| 이미 있는 화면 고치기·다듬기 | impeccable | `/impeccable polish ...` 등 |
-| 디자인 리뷰 받기 | impeccable | `/impeccable critique ...` |
-| 접근성·반응형·성능 점검 | impeccable | `/impeccable audit ...` |
-| 마음에 드는 사이트 디자인 따라하기 | hallmark | `hallmark study <URL>` |
-| 팔레트·폰트 조합만 고르기 | ui-ux-pro-max | `ui-ux-pro-max로 ...` |
-| 웹 가이드라인 규칙 점검 | web-design-guidelines | `web-design-guidelines로 ...` |
-| 애니메이션·인터랙션 디테일 | emil-design-eng | `emil-design-eng 기준으로 ...` |
+| 새 랜딩·포트폴리오 만들기 | design-taste-frontend | [3-A](#a-새로-만들기) |
+| 새 앱 화면·대시보드 만들기 | impeccable | [2-B](#b-새-화면-만들기) |
+| 이미 만든 화면 다듬기 | impeccable | [2-C](#c-있는-화면-고치기) |
+| "AI가 만든 것 같다"는 말을 들었다 | hallmark + design-taste-frontend | [5](#5-ai-티-집중-제거) |
+| 페이지마다 색·서체가 다르다 | ui-ux-pro-max | [4-B](#ui-ux-pro-max--업종에-맞는-색서체-한-세트) |
+| 메뉴·모달이 굼뜨거나 툭툭 끊긴다 | emil-design-eng | [4-C](#emil-design-eng--애니메이션-곡선과-속도) |
+| 키보드로 안 눌린다·입력칸이 불편하다 | web-design-guidelines | [4-D](#web-design-guidelines--접근성ux-규칙-점검) |
+| 마음에 드는 사이트 느낌을 가져오고 싶다 | hallmark study | [4-A](#hallmark--ai-티-검사와-디자인-dna-추출) |
 
 ---
 
-## 2. impeccable — 화면 만들기·고치기·점검
+## 2. impeccable — 만들기·고치기·점검
 
-### 처음 한 번: 프로젝트 정보 등록
+### A. 프로젝트마다 처음 한 번
 
 ```
 /impeccable init
 ```
-질문에 답하면 `PRODUCT.md`(누가 쓰는지, 브랜드, 원칙)를 만든다. 이후 모든 명령이 이 파일을 참고하니 프로젝트마다 한 번 해 두면 결과가 훨씬 좋아진다.
+제품·사용자·브랜드를 묻고 `PRODUCT.md`를 만든다. 이후 모든 명령이 이걸 참고하니 **매번 서비스 설명을 안 해도 된다.**
 
-이미 디자인이 있는 프로젝트라면 이것도:
+이미 디자인이 있는 프로젝트면 이것도:
 ```
 /impeccable document
 ```
-현재 코드에서 색·폰트·간격을 뽑아 `DESIGN.md`로 정리한다.
+현재 코드의 색·서체·간격을 `DESIGN.md`로 정리한다. 다른 디자인 스킬(hallmark 등)도 이 파일을 기준으로 따른다.
 
-### 명령어 한눈에
+### B. 새 화면 만들기
 
-| 단계 | 명령 | 언제 |
-|---|---|---|
-| **기획** | `shape` | 코드 쓰기 전에 질문을 주고받으며 디자인 방향을 정할 때 |
-| **평가** | `critique` | UX 관점 리뷰 (점수 포함) |
-| | `audit` | 접근성·성능·반응형 기술 점검 (P0~P3 등급) |
-| **다듬기** | `polish` | 출시 전 마지막 정리 (정렬, 간격, 일관성) |
-| | `bolder` | 너무 밋밋할 때 |
-| | `quieter` | 너무 요란할 때 |
-| | `distill` | 복잡한 걸 덜어낼 때 |
-| | `harden` | 에러 처리, 긴 텍스트, 빈 데이터 같은 실전 대비 |
-| | `onboard` | 첫 사용 화면, 빈 상태 |
-| **강화** | `typeset` | 폰트·글자 위계 |
-| | `layout` | 간격·리듬·배치 |
-| | `colorize` | 색이 너무 없을 때 |
-| | `animate` | 의미 있는 애니메이션 추가 |
-| | `delight` | 기억에 남는 작은 디테일 |
-| | `overdrive` | 셰이더, 물리 효과 같은 과감한 기술 |
-| **고치기** | `clarify` | 문구, 라벨, 에러 메시지 |
-| | `adapt` | 모바일·태블릿 대응 |
-| | `optimize` | 느린 화면 |
+기획부터 같이 하고 싶을 때:
+```
+/impeccable shape 프리랜서용 할 일 관리 앱의 대시보드
+```
+질문을 주고받으며 디자인 방향을 정한 뒤 만든다.
 
-### 바로 쓰는 프롬프트
+바로 만들 때:
+```
+/impeccable 회원가입 화면 만들어줘. 이메일과 구글 로그인.
+만든 뒤 Playwright로 열어서 데스크톱·모바일 스크린샷을 보고, 어색한 곳을 고쳐서 보여줘.
+```
 
+### C. 있는 화면 고치기
+
+**전체 점검 → 고치기** (가장 많이 쓸 프롬프트)
 ```
-/impeccable shape 할 일 관리 앱의 대시보드. 혼자 일하는 프리랜서용
+/impeccable audit 현재 메인 페이지.
+특히 hierarchy, spacing, typography, responsive layout, accessibility,
+AI-generated design anti-pattern을 확인해줘.
+중요도가 높은 문제부터 수정하고, 수정 후 Playwright로 다시 열어서 확인해.
 ```
-```
-/impeccable 회원가입 화면 만들어줘. 이메일과 구글 로그인
-```
+
+**UX 관점 리뷰만** (점수와 함께, 코드는 안 고침)
 ```
 /impeccable critique src/app/page.tsx
 ```
-```
-/impeccable audit 전체 사이트
-```
-```
-/impeccable polish src/components/PricingTable.tsx
-```
-```
-/impeccable bolder 히어로 섹션이 너무 평범해
-```
-```
-/impeccable harden 주문 목록 화면. 주문이 0개일 때, 1000개일 때, 상품명이 아주 길 때
-```
-```
-/impeccable adapt 대시보드를 모바일에서도 쓸 수 있게
-```
 
-**인자 없이 `/impeccable`만 치면** 지금 프로젝트에 맞는 명령 메뉴를 보여준다. 뭘 써야 할지 모를 때 좋다.
+**하나씩 손보기**
+| 증상 | 프롬프트 |
+|---|---|
+| 너무 밋밋하다 | `/impeccable bolder 히어로 섹션` |
+| 너무 요란하다 | `/impeccable quieter 전체 페이지` |
+| 복잡하다 | `/impeccable distill 설정 화면` |
+| 글자가 어색하다 | `/impeccable typeset 블로그 글 페이지` |
+| 간격·배치가 어색하다 | `/impeccable layout 가격표 섹션` |
+| 색이 너무 없다 | `/impeccable colorize 대시보드` |
+| 문구가 헷갈린다 | `/impeccable clarify 결제 화면 에러 메시지` |
+| 모바일에서 깨진다 | `/impeccable adapt 대시보드를 모바일에서도 쓸 수 있게` |
+| 실제 데이터에 약하다 | `/impeccable harden 주문 목록. 주문 0개, 1000개, 상품명이 아주 길 때` |
+| 출시 직전 마무리 | `/impeccable polish 전체 사이트` |
 
-### 추천 순서
-
-- **새로 만들 때:** `init` → `shape` → 만들기 → `critique` → `polish`
-- **있는 걸 고칠 때:** `critique`로 문제 확인 → 해당 명령(`layout`, `typeset` 등) → `audit` → `polish`
+**뭘 써야 할지 모를 때:** 인자 없이 `/impeccable`만 치면 지금 프로젝트에 맞는 메뉴를 보여준다.
 
 ---
 
-## 3. design-taste-frontend — 템플릿 같지 않은 랜딩·포트폴리오
-
-어떤 느낌인지만 말하면 알아서 방향을 잡는다. 시작하기 전에 한 줄로 "디자인 해석"을 먼저 보여준다.
+## 3. design-taste-frontend — AI 티 안 나는 방향 잡기
 
 ### 다이얼 3개
 
-결과의 성격을 정하는 숫자. 직접 말하지 않으면 요청 내용을 보고 정한다.
+| 다이얼 | 낮게 | 높게 |
+|---|---|---|
+| **VARIANCE** (레이아웃) | 정돈된 그리드, 안전한 구성 | 비대칭, 요소 겹침, 과감한 크기 차이 |
+| **MOTION** (움직임) | hover 정도만 | spring, 자석 효과, 스크롤 연동 |
+| **DENSITY** (정보량) | 럭셔리 브랜드·포트폴리오처럼 여유 | 대시보드처럼 빽빽 |
 
-| 다이얼 | 1 | 10 | 기본 |
+**시작값 예시**
+| 만들 것 | VARIANCE | MOTION | DENSITY |
 |---|---|---|---|
-| **VARIANCE** (구성 변화) | 완전 대칭 | 예술적 파격 | 8 |
-| **MOTION** (움직임) | 정적 | 영화 같은 연출 | 6 |
-| **DENSITY** (정보 밀도) | 갤러리처럼 여유 | 조종석처럼 빽빽 | 4 |
+| 깔끔한 SaaS 제품 | 5 | 4 | 6 |
+| SaaS 랜딩 (일반) | 7 | 6 | 4 |
+| 비주얼 중심 제품 소개 | 7 | 6 | 3 |
+| 디자이너 포트폴리오 | 8 | 7 | 3 |
+| 개발자 포트폴리오 | 6 | 5 | 4 |
+| 에이전시·크리에이티브 | 9 | 8 | 3 |
+| 블로그·에디토리얼 | 6 | 4 | 3 |
+| 공공기관·신뢰 중요 | 3 | 2 | 5 |
 
-**느낌별 자동 설정:**
-| 이렇게 말하면 | VARIANCE / MOTION / DENSITY |
-|---|---|
-| "미니멀, 깔끔, Linear 스타일" | 5–6 / 3–4 / 2–3 |
-| "프리미엄, 애플 같은, 럭셔리" | 7–8 / 5–7 / 3–4 |
-| "재밌게, 실험적, 에이전시, Awwwards" | 9–10 / 8–10 / 3–4 |
-| "신뢰감, 공공기관, 접근성 중요" | 3–4 / 2–3 / 4–5 |
+숫자를 안 주면 "미니멀하게", "프리미엄하게", "실험적으로" 같은 말을 보고 알아서 정한다. 숫자가 정답은 아니고, **어느 방향으로 얼마나 밀지 알려주는 것**이 핵심이다.
 
-### 바로 쓰는 프롬프트
+### A. 새로 만들기
 
+**기본형** (이 틀을 복사해서 `{ }`만 바꿔 쓰기)
 ```
-design-taste-frontend로 SaaS 랜딩 페이지 만들어줘. 회의록 자동 정리 서비스, 타깃은 스타트업 팀
-```
-```
-design-taste-frontend로 프로덕트 디자이너 포트폴리오. 프리미엄하고 차분하게
-```
-```
-design-taste-frontend로 만들어줘. VARIANCE 9, MOTION 8, DENSITY 3. 크리에이티브 에이전시 소개 페이지
-```
-```
-design-taste-frontend로 이 페이지 리디자인. 지금 구조는 유지하고 세련되게
-```
-```
-design-taste-frontend로 이 페이지 리디자인. 완전히 새롭게 갈아엎어도 돼
+design-taste-frontend로 {만들 것}을 만들어줘.
+
+먼저 제품과 타깃 사용자를 분석하고 visual direction을 정해서
+주제·손님·이 페이지가 할 일을 한 줄씩 적어 나한테 확인받아.
+
+다이얼은 VARIANCE {7}, MOTION {6}, DENSITY {3}.
+전형적인 AI-generated SaaS template처럼 보이지 않게 해줘.
+같은 모양 카드 반복, 장식용 그라데이션, 기본 서체, 가운데 정렬 히어로는 쓰지 마.
+
+다 만들면 끝내지 말고 Playwright로 실제 페이지를 열어서
+스크린샷 기준으로 시각적 문제를 찾아 고치고 다시 확인해.
+최소 2~3번 반복해.
 ```
 
-**팁:** "구조 유지"라고 하면 기존 틀을 지키며 다듬고, "갈아엎어"라고 하면 VARIANCE·MOTION을 +2 올려 크게 바꾼다.
+**예시**
+```
+design-taste-frontend로 회의록 자동 정리 서비스의 랜딩 페이지를 만들어줘.
+타깃은 5~20명 스타트업 팀. 다이얼은 VARIANCE 7, MOTION 6, DENSITY 4.
+만들기 전에 방향 먼저 확인받고, 다 만들면 Playwright로 2~3번 보고 고쳐.
+```
+
+**이미지로 방향 주기** (말보다 정확하다)
+```
+[내가 만든 시안이나 무드보드 이미지 첨부]
+design-taste-frontend로 이 이미지 느낌의 포트폴리오를 만들어줘.
+색·간격·레이아웃을 분석해서 반영하고, 그대로 베끼지는 마.
+```
+
+### B. 리디자인
+
+```
+design-taste-frontend로 이 페이지 리디자인. 지금 구조와 문구는 유지하고 세련되게.
+```
+```
+design-taste-frontend로 이 페이지 리디자인. 완전히 새롭게 갈아엎어도 돼.
+```
+"유지"는 기존 틀을 지키고 MOTION만 +1, "갈아엎어"는 VARIANCE·MOTION을 +2 올린다.
 
 ---
 
 ## 4. 보조 스킬
 
-### hallmark — 남의 사이트에서 디자인 DNA 뽑기
+### hallmark — AI 티 검사와 디자인 DNA 추출
+
+`audit`은 **목록만 내고 코드는 안 고친다.** 고치려면 한 번 더 시켜야 한다.
+```
+hallmark audit src/app/page.tsx
+걸린 항목마다 관문 번호와 고칠 방법을 한 줄씩 적어 줘. 코드는 아직 고치지 마.
+```
+```
+이 목록대로 고쳐 줘. 근거 없는 숫자(「+47% 전환」 같은)는 실제 값이나 「확인 필요」로 바꿔.
+```
+
+마음에 드는 사이트의 구성·서체·색을 뽑기:
 ```
 hallmark study https://linear.app
 ```
 ```
 hallmark study [스크린샷 첨부] 이 느낌으로 내 서비스 소개 페이지 만들어줘
 ```
-```
-hallmark study https://stripe.com 분석하고 design.md로 저장해줘
-```
-레이아웃 구조, 폰트, 색을 분석해 준다. 픽셀을 그대로 베끼지는 않는다.
 
-### ui-ux-pro-max — 팔레트·폰트 데이터 검색
+### ui-ux-pro-max — 업종에 맞는 색·서체 한 세트
+
 ```
-ui-ux-pro-max로 핀테크 앱에 어울리는 팔레트와 폰트 조합 3개 추천해줘
-```
-```
-ui-ux-pro-max로 웰니스 예약 서비스 디자인 시스템 뽑아줘
+ui-ux-pro-max로 「{동네 꽃집 소개 페이지}」에 맞는 디자인 시스템을 하나 뽑아 줘.
+페이지 구성·스타일·색 다섯·서체 짝을 표로 보여 주고,
+내가 고르면 그 값을 프로젝트 전체 색·서체 변수로 정리해 줘.
 ```
 
-### web-design-guidelines — 규칙 점검
-```
-web-design-guidelines로 src/components 점검해줘
-```
-문제를 `파일:줄` 형식으로 짧게 알려준다.
+### emil-design-eng — 애니메이션 곡선과 속도
 
-### emil-design-eng — 애니메이션·디테일
 ```
-emil-design-eng 기준으로 이 모달 열고 닫히는 애니메이션 다듬어줘
+emil-design-eng 기준으로 이 프로젝트의 애니메이션을 검토해 줘.
+전·후·이유 세 칸 표로 보여 주고, 내가 확인하면 고쳐 줘.
 ```
 ```
-emil-design-eng 기준으로 버튼 hover·press 반응 손봐줘
+이 페이지를 디자인 엔지니어 관점에서 리뷰해줘.
+타이포그래피, spacing, hierarchy, interaction, animation을 확인하고
+문제가 큰 순서대로 수정해줘.
+```
+
+**알아두면 좋은 기준** (스킬 문서)
+| 대상 | 속도 |
+|---|---|
+| 버튼 눌림 | 100~160ms |
+| 툴팁·작은 팝오버 | 125~200ms |
+| 드롭다운·셀렉트 | 150~250ms |
+| 모달·서랍 | 200~500ms |
+
+`transition: all` 대신 바뀌는 속성만, 드롭다운에 `ease-in` 대신 `ease-out`, 버튼 `:active`에 `scale(0.97)`.
+
+### web-design-guidelines — 접근성·UX 규칙 점검
+
+```
+web-design-guidelines로 src/ 아래 화면 코드를 검사해 줘.
+파일:줄 형식으로 받은 뒤, 접근성 문제부터 순서대로 고쳐 줘.
+```
+파일을 안 알려주면 어떤 파일을 볼지 되묻는다.
+
+---
+
+## 5. AI 티 집중 제거
+
+```
+이 사이트에서 AI-generated 느낌이 나는 부분을 찾아줘.
+
+특히 반복적인 카드 레이아웃, 과도한 rounded container, 불필요한 gradient,
+평범한 centered hero, 획일적인 spacing, generic typography,
+의미 없는 animation, 근거 없는 숫자를 집중적으로 확인해.
+
+단순히 전부 제거하지 말고 이 제품의 브랜드와 목적에 맞는
+더 나은 디자인 선택으로 교체해.
+
+완료 후 Playwright에서 실제 결과물을 보고 시각적으로 다시 평가해.
 ```
 
 ---
 
-## 5. 결과가 좋아지는 요령
+## 6. 한 번에 돌리는 워크플로
 
-1. **누가 쓰는지 말하기.** "랜딩 페이지"보다 "30대 프리랜서가 세금 계산할 때 쓰는 앱의 랜딩"이 훨씬 낫다.
-2. **분위기를 형용사 2~3개로.** "차분하고 신뢰감 있게", "대담하고 장난스럽게".
-3. **참고 사이트 이름 대기.** "Linear처럼", "Stripe 문서처럼". 정확히 따라하려면 `hallmark study`.
-4. **한 번에 하나씩.** "색도 바꾸고 레이아웃도 바꾸고 애니메이션도"보다 `colorize` → `layout` → `animate` 순서로 나눠서.
-5. **기존 프로젝트면 `DESIGN.md`부터.** `/impeccable document`로 만들어 두면 모든 스킬이 그 기준을 따른다.
+### 새로 만들 때
+
+```
+{만들 것}을 만들 거야.
+
+1) design-taste-frontend로 주제·손님·할 일을 먼저 정해서 나한테 확인받아.
+2) ui-ux-pro-max로 이 업종의 디자인 시스템(색 다섯·서체 짝)을 골라 변수로 고정해.
+3) 그 규칙대로 화면을 만들어.
+4) hallmark audit으로 스스로 검사해서 걸린 것까지 고쳐.
+5) Playwright로 데스크톱·모바일을 열어 보고 2~3번 고쳐서 보여줘.
+```
+
+### 이미 만든 화면을 단계별로 다듬을 때
+
+```
+지금 이 프로젝트의 메인 화면을 다섯 단계로 손봐 줘.
+단계마다 무엇을 바꿨는지 세 줄로 보고하고, 내가 「다음」이라고 하면 넘어가.
+
+1) /impeccable audit으로 hierarchy·spacing·typography·반응형·접근성 문제를 중요도 순으로 찾아 고쳐.
+2) hallmark audit으로 AI 티 나는 곳을 받아. 근거 없는 숫자는 「확인 필요」로 바꾸고 나머지도 고쳐.
+3) emil-design-eng 기준으로 transition: all과 ease-in을 고치고 버튼에 눌림 반응을 넣어. 전·후·이유 표로.
+4) web-design-guidelines로 접근성·UX 위반을 파일:줄 목록으로 받아 전부 고쳐.
+5) /impeccable polish로 마무리하고, Playwright로 고치기 전·후 화면을 나란히 보여 줘.
+```
+
+마음에 안 드는 단계는 "3번은 건너뛰어"라고 하면 된다.
+
+---
+
+## 7. 막힐 때
+
+| 증상 | 할 일 |
+|---|---|
+| 스킬을 안 쓰는 것 같다 | 프롬프트에 스킬 이름을 넣는다. 그래도 안 되면 Claude Code를 껐다 켠다 |
+| 결과가 여전히 뻔하다 | 0번 규칙 3(하지 말 것)과 4(다이얼 숫자)를 추가한다 |
+| `hallmark audit`이 코드를 안 고친다 | 원래 그렇다. "이 목록대로 고쳐 줘"라고 한 번 더 |
+| ui-ux-pro-max가 Python이 없다며 멈춘다 | Python 3를 설치한다 (스킬이 대신 설치하지 않는다) |
+| 화면 확인을 안 하고 끝낸다 | "Playwright로 열어서 스크린샷 보고 고쳐"를 프롬프트 끝에 붙인다 |
+| 한 번에 너무 많이 바뀐다 | "단계마다 멈추고 「다음」을 기다려"를 붙인다 |
+
+> **핵심 한 줄:** 프롬프트보다 강력한 건 피드백 루프다. **기준(스킬) → 만들기 → 보기(Playwright) → 고치기 → 반복.**
