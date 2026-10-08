@@ -13,4 +13,10 @@ claude plugin install superpowers@claude-plugins-official --scope user 2>/dev/nu
 PW_ARGS=""
 [ -x /opt/pw-browsers/chromium ] && PW_ARGS="--headless --no-sandbox --executable-path /opt/pw-browsers/chromium"
 claude mcp add --scope user playwright -- npx @playwright/mcp@latest $PW_ARGS 2>/dev/null || true
-echo "완료: 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers 플러그인, playwright"
+npm i -g agent-browser >/dev/null 2>&1 || true
+# 클라우드 컨테이너: agent-browser도 내장 Chromium + 샌드박스 끔
+if [ -x /opt/pw-browsers/chromium ]; then
+  mkdir -p ~/.agent-browser
+  echo '{"executablePath":"/opt/pw-browsers/chromium","args":"--no-sandbox"}' > ~/.agent-browser/config.json
+fi
+echo "완료: 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers 플러그인, playwright, agent-browser"
