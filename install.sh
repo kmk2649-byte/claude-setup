@@ -7,5 +7,7 @@ cp -r "$DIR"/skills/* ~/.claude/skills/
 cp "$DIR"/agents/*.md ~/.claude/agents/
 claude plugin marketplace add DietrichGebert/ponytail 2>/dev/null || true
 claude plugin install ponytail@ponytail --scope user 2>/dev/null || true
+claude plugin marketplace add anthropics/claude-plugins-official 2>/dev/null || true
+claude plugin install superpowers@claude-plugins-official --scope user 2>/dev/null || true
 claude mcp add --scope user playwright -- npx @playwright/mcp@latest 2>/dev/null || true
-echo "완료: 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail 플러그인, playwright"
+echo "완료: 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers 플러그인, playwright"
