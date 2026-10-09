@@ -5,6 +5,11 @@ DIR=$(cd "$(dirname "$0")" && pwd)
 mkdir -p ~/.claude/skills ~/.claude/agents
 cp -r "$DIR"/skills/* ~/.claude/skills/
 cp "$DIR"/agents/*.md ~/.claude/agents/
+# 전역 규칙: 이 레포 CLAUDE.md를 ~/.claude/CLAUDE.md의 표시 구간에 넣는다(있으면 교체, 구간 밖 내용은 그대로)
+F=~/.claude/CLAUDE.md; touch "$F"
+awk '/^<!-- claude-setup:start -->$/{s=1} !s{print} /^<!-- claude-setup:end -->$/{s=0}' "$F" > "$F.tmp"
+{ cat "$F.tmp"; echo '<!-- claude-setup:start -->'; cat "$DIR/CLAUDE.md"; echo '<!-- claude-setup:end -->'; } > "$F"
+rm "$F.tmp"
 claude plugin marketplace add DietrichGebert/ponytail 2>/dev/null || true
 claude plugin install ponytail@ponytail --scope user 2>/dev/null || true
 claude plugin marketplace add anthropics/claude-plugins-official 2>/dev/null || true
@@ -16,4 +21,4 @@ claude plugin install ui-ux-pro-max@ui-ux-pro-max-skill --scope user 2>/dev/null
 PW_ARGS=""
 [ -x /opt/pw-browsers/chromium ] && PW_ARGS="--headless --no-sandbox --executable-path /opt/pw-browsers/chromium"
 claude mcp add --scope user playwright -- npx @playwright/mcp@latest $PW_ARGS 2>/dev/null || true
-echo "완료: 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max 플러그인, playwright"
+echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max 플러그인, playwright"
