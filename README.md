@@ -22,14 +22,15 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | hallmark | 구조까지 다양하게 만드는 anti-AI-slop 디자인. 테마 21종, `audit`·`redesign`·`study`(URL·스크린샷에서 디자인 DNA 추출) |
 | graphify | 코드·문서·이미지를 지식 그래프로 만들어 구조와 관계를 질문 |
 
-## 에이전트 (`agents/`, impeccable 보조)
+## 에이전트 (`agents/`)
 
 | 에이전트 | 설명 |
 |---|---|
-| impeccable-asset-producer | 승인된 시안에서 이미지 에셋 추출 |
-| impeccable-documenter | 완성된 결과물에서 `DESIGN.md` 작성 |
-| impeccable-finish-reviewer | 완성본이 시안과 품질 기준에 맞는지 검토 |
-| impeccable-manual-edit-applier | 브라우저에서 직접 고친 문구를 소스에 반영 |
+| fable-expert | 가장 상위 모델(Fable)로 도는 해결사. 두 번 고쳐도 안 잡히는 버그, 설계 결정, 보안·돈·데이터 이전 코드 검토, 큰 변경의 최종 검토에만 부른다. 비싸니 일상 작업엔 쓰지 않는다 |
+| impeccable-asset-producer | (impeccable 보조) 승인된 시안에서 이미지 에셋 추출 |
+| impeccable-documenter | (impeccable 보조) 완성된 결과물에서 `DESIGN.md` 작성 |
+| impeccable-finish-reviewer | (impeccable 보조) 완성본이 시안과 품질 기준에 맞는지 검토 |
+| impeccable-manual-edit-applier | (impeccable 보조) 브라우저에서 직접 고친 문구를 소스에 반영 |
 
 ## 플러그인
 
