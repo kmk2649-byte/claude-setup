@@ -7,6 +7,12 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 ## 설치
 
 - **로컬 PC:** `bash install.sh` (여러 번 실행해도 안전)
+- **SSH 서버:** 아래 한 줄을 실행한다. 처음이면 받아서 설치하고, 이미 있으면 최신으로 받아 다시 설치한다. 레포를 고친 뒤에도 같은 줄을 다시 돌리면 된다.
+
+  ```bash
+  git clone https://github.com/kmk2649-byte/claude-setup ~/claude-setup 2>/dev/null || git -C ~/claude-setup pull; bash ~/claude-setup/install.sh
+  ```
+  미리 필요한 것: `claude` 설치·로그인, Node.js, Python 3. 서버에 Chrome이 없으면 `npx -y playwright install --with-deps chrome`을 한 번 실행한다 (sudo 권한 필요).
 - **클라우드 세션:** 환경의 setup script가 이 레포 `main`의 `install.sh`를 실행한다. 새 세션부터 적용된다.
 
 > 설치 줄마다 `|| true`가 붙어 있어 실패해도 조용히 넘어간다. 새로 넣은 게 안 보이면 해당 명령을 직접 실행해 오류를 확인할 것.
@@ -49,7 +55,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 | MCP | 설명 |
 |---|---|
-| playwright | 브라우저 자동화 (페이지 열기, 클릭, 입력, 스크린샷). 클라우드에서는 내장 Chromium을 `--headless --no-sandbox`로 사용 |
+| playwright | 브라우저 자동화 (페이지 열기, 클릭, 입력, 스크린샷). 화면 없는 Linux(SSH 서버·클라우드)는 `--headless`, root면 `--no-sandbox`, 클라우드는 내장 Chromium을 쓴다 |
 
 ## 겹치는 것
 
