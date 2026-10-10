@@ -17,6 +17,8 @@ claude plugin install superpowers@claude-plugins-official --scope user 2>/dev/nu
 claude plugin install claude-code-setup@claude-plugins-official --scope user 2>/dev/null || true
 claude plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill 2>/dev/null || true
 claude plugin install ui-ux-pro-max@ui-ux-pro-max-skill --scope user 2>/dev/null || true
+claude plugin marketplace add anthropics/knowledge-work-plugins 2>/dev/null || true
+for p in marketing sales legal; do claude plugin install $p@knowledge-work-plugins --scope user 2>/dev/null || true; done
 # 화면 없는 Linux(SSH 서버·클라우드) → headless, root → 샌드박스 끔, 클라우드 → 내장 Chromium
 PW_ARGS=""
 if [ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then
@@ -29,4 +31,4 @@ fi
 # 다시 실행하면 옵션을 새로 맞추도록 지우고 등록
 claude mcp remove --scope user playwright >/dev/null 2>&1 || true
 claude mcp add --scope user playwright -- npx @playwright/mcp@latest $PW_ARGS 2>/dev/null || true
-echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max 플러그인, playwright"
+echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·marketing·sales·legal 플러그인, playwright"

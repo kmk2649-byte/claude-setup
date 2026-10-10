@@ -52,6 +52,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | superpowers | claude-plugins-official | 기획 → 계획 → TDD → 디버깅 → 검증 → 리뷰 순으로 진행하는 개발 규칙 모음 |
 | claude-code-setup | claude-plugins-official | 코드베이스를 분석해 훅·스킬·MCP·서브에이전트 추천 |
 | ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
+| marketing·sales·legal | anthropics/knowledge-work-plugins | 마케팅(콘텐츠·캠페인·SEO 등 8), 영업(딜·파이프라인·콜 준비 등 38), 법무(계약 검토·NDA·컴플라이언스 등 9) 스킬. 함께 등록되는 원격 MCP(HubSpot·Salesforce·DocuSign 등)는 각각 로그인해야 쓰이고, 클라우드에서는 '인증 필요'로만 보인다 |
 
 ## MCP
 
@@ -76,6 +77,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 |---|---|
 | agent-browser | playwright MCP와 기능이 같음 |
 | example-skills (anthropics/skills) | 디자인은 impeccable·design-taste-frontend로 충분하고, 나머지는 기본 스킬과 겹침 |
+| productivity (knowledge-work-plugins) | memory-management 스킬이 CLAUDE.md·memory/에 기억을 써서 second-brain 규칙과 겹침 |
 | claude-mem, OmniRoute, Headroom, task-observer | 클라우드 컨테이너는 세션이 끝나면 지워지거나 로컬 프록시가 필요해 맞지 않음. 로컬 PC 전용으로는 고려 가능 |
 
 ## 추가·삭제할 때
