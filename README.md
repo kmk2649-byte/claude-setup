@@ -2,7 +2,7 @@
 
 Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `install.sh` 한 번으로 설치한다.
 
-> 디자인 스킬 프롬프트 사용법은 [GUIDE.md](GUIDE.md) 참고.
+> 디자인 도구 사용법과 프롬프트(처음 세팅·개선)는 [GUIDE.md](GUIDE.md) 참고.
 
 ## 설치
 
