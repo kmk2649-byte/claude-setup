@@ -57,6 +57,12 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 |---|---|
 | playwright | 브라우저 자동화 (페이지 열기, 클릭, 입력, 스크린샷). 화면 없는 Linux(SSH 서버·클라우드)는 `--headless --browser chromium`, root면 `--no-sandbox`, 클라우드는 내장 Chromium을 쓴다 |
 
+`install.sh`에 넣지 않고 claude.ai 커넥터로 쓰는 MCP (로그인이 브라우저에서 필요해서, 한 번 연결하면 클라우드·데스크톱·웹 모두에서 쓸 수 있다):
+
+| MCP | 설치 |
+|---|---|
+| QuantConnect | https://claude.ai/customize/connectors 에서 커스텀 커넥터 추가 → URL `https://www.quantconnect.com/api/v2/mcp` → Connect 후 조직 선택·Authorize → 새 세션. 조직에 유료 agent node(A1-1 이상)가 필요하다. PC·SSH 터미널에서만 쓸 때는 `claude mcp add --transport http --scope user quantconnect https://www.quantconnect.com/api/v2/mcp` 후 `/mcp`로 로그인 |
+
 ## 겹치는 것
 
 - **코드 리뷰:** `code-review`(기본, 버그), `ponytail-review`(과한 설계), `superpowers:requesting-code-review`. 원하는 쪽을 이름으로 부를 것.
