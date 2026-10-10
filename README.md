@@ -31,6 +31,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | web-design-guidelines | Vercel 웹 인터페이스 가이드라인으로 UI 코드 검토 (`파일:줄` 형식) |
 | hallmark | 구조까지 다양하게 만드는 anti-AI-slop 디자인. 테마 21종, `audit`·`redesign`·`study`(URL·스크린샷에서 디자인 DNA 추출) |
 | graphify | 코드·문서·이미지를 지식 그래프로 만들어 구조와 관계를 질문 |
+| find-skills | "이런 걸 하는 스킬 있어?"라고 물으면 skills.sh에서 찾아 설치 횟수·출처를 확인하고 추천·설치 (vercel-labs/skills) |
 
 ## 에이전트 (`agents/`)
 
