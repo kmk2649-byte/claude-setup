@@ -5,6 +5,8 @@ DIR=$(cd "$(dirname "$0")" && pwd)
 mkdir -p ~/.claude/skills ~/.claude/agents
 cp -r "$DIR"/skills/* ~/.claude/skills/
 cp "$DIR"/agents/*.md ~/.claude/agents/
+# 법무·재무 플러그인의 한국 기준 기본 플레이북 (프로젝트 .claude/에 있으면 그쪽이 우선)
+cp "$DIR"/korea/*.local.md ~/.claude/
 # 전역 규칙: 이 레포 CLAUDE.md를 ~/.claude/CLAUDE.md의 표시 구간에 넣는다(있으면 교체, 구간 밖 내용은 그대로)
 F=~/.claude/CLAUDE.md; touch "$F"
 awk '/^<!-- claude-setup:start -->$/{s=1} !s{print} /^<!-- claude-setup:end -->$/{s=0}' "$F" > "$F.tmp"
@@ -31,4 +33,4 @@ fi
 # 다시 실행하면 옵션을 새로 맞추도록 지우고 등록
 claude mcp remove --scope user playwright >/dev/null 2>&1 || true
 claude mcp add --scope user playwright -- npx @playwright/mcp@latest $PW_ARGS 2>/dev/null || true
-echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·marketing·sales·legal 플러그인, playwright"
+echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·marketing·sales·legal 플러그인, playwright"

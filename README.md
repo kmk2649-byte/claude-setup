@@ -80,6 +80,10 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | productivity (knowledge-work-plugins) | memory-management 스킬이 CLAUDE.md·memory/에 기억을 써서 second-brain 규칙과 겹침 |
 | claude-mem, OmniRoute, Headroom, task-observer | 클라우드 컨테이너는 세션이 끝나면 지워지거나 로컬 프록시가 필요해 맞지 않음. 로컬 PC 전용으로는 고려 가능 |
 
+## 한국 기준 플레이북 (`korea/`)
+
+legal·finance 플러그인은 원래 미국 기준(미국 주법, US GAAP·SOX)이다. `install.sh`가 `korea/legal.local.md`·`korea/finance.local.md`를 `~/.claude/`에 넣고, 전역 규칙(CLAUDE.md)이 이 파일을 기본 플레이북으로 읽게 한다. 프로젝트 `.claude/`에 같은 이름의 파일이 있으면 그쪽이 우선이다.
+
 ## 추가·삭제할 때
 
 1. 스킬은 `skills/<이름>/`, 에이전트는 `agents/`에 넣고, 플러그인·MCP는 `install.sh`에 한 줄 추가.
