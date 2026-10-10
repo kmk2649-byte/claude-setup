@@ -2,6 +2,8 @@
 
 설치된 디자인 도구를 **처음 세팅할 때**와 **이미 만든 작업물을 개선할 때**로 나눠 정리했다. 프롬프트는 복사해서 `{ }`만 바꿔 쓰면 된다.
 
+> 다른 가이드: [개발](GUIDE-dev.md) · [업무(마케팅·영업·법무·재무)](GUIDE-work.md) · [기타 도구](GUIDE-tools.md)
+
 > 참고한 자료: 각 스킬의 SKILL.md(impeccable v4.5, hallmark v1.1, ui-ux-pro-max v2.13), [낭만빌더 셋업 가이드](https://sdk-kim-builds.com/guides/claude-web-design-skills-setup/), [바이브 메이커 디자인 스킬 5 PDF](https://docs.vibemake.kr/downloads/claude-design-skills5.pdf), [홍익맨 노션 배포자료](https://possible-timpani-b05.notion.site/5-3c9f67ccdbf88173ac08ee5183817752)
 
 ---
