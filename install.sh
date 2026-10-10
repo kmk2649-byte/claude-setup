@@ -19,7 +19,11 @@ claude plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill 2>/dev/null |
 claude plugin install ui-ux-pro-max@ui-ux-pro-max-skill --scope user 2>/dev/null || true
 # 화면 없는 Linux(SSH 서버·클라우드) → headless, root → 샌드박스 끔, 클라우드 → 내장 Chromium
 PW_ARGS=""
-[ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ] && PW_ARGS="--headless"
+if [ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then
+  # 서버엔 Google Chrome 이 없음 → playwright 전용 Chromium (MCP 버전에 맞는 것을 받아 둠)
+  PW_ARGS="--headless --browser chromium"
+  [ -x /opt/pw-browsers/chromium ] || npx -y -p @playwright/mcp@latest playwright install chromium >/dev/null 2>&1 || true
+fi
 [ "$(id -u)" = 0 ] && PW_ARGS="$PW_ARGS --no-sandbox"
 [ -x /opt/pw-browsers/chromium ] && PW_ARGS="$PW_ARGS --executable-path /opt/pw-browsers/chromium"
 # 다시 실행하면 옵션을 새로 맞추도록 지우고 등록
