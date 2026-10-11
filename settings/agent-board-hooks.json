@@ -1,0 +1,113 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_status",
+            "headers": {
+              "apikey": "$AGENT_BOARD_ANON_KEY",
+              "Authorization": "Bearer $AGENT_BOARD_ANON_KEY"
+            },
+            "timeout": 5,
+            "allowedEnvVars": [
+              "AGENT_BOARD_ANON_KEY"
+            ]
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_status",
+            "headers": {
+              "apikey": "$AGENT_BOARD_ANON_KEY",
+              "Authorization": "Bearer $AGENT_BOARD_ANON_KEY"
+            },
+            "timeout": 5,
+            "allowedEnvVars": [
+              "AGENT_BOARD_ANON_KEY"
+            ]
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt|idle_prompt|elicitation_dialog|elicitation_url_dialog|agent_needs_input",
+        "hooks": [
+          {
+            "type": "http",
+            "url": "https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_status",
+            "headers": {
+              "apikey": "$AGENT_BOARD_ANON_KEY",
+              "Authorization": "Bearer $AGENT_BOARD_ANON_KEY"
+            },
+            "timeout": 5,
+            "allowedEnvVars": [
+              "AGENT_BOARD_ANON_KEY"
+            ]
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_status",
+            "headers": {
+              "apikey": "$AGENT_BOARD_ANON_KEY",
+              "Authorization": "Bearer $AGENT_BOARD_ANON_KEY"
+            },
+            "timeout": 5,
+            "allowedEnvVars": [
+              "AGENT_BOARD_ANON_KEY"
+            ]
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_status",
+            "headers": {
+              "apikey": "$AGENT_BOARD_ANON_KEY",
+              "Authorization": "Bearer $AGENT_BOARD_ANON_KEY"
+            },
+            "timeout": 5,
+            "allowedEnvVars": [
+              "AGENT_BOARD_ANON_KEY"
+            ]
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_status",
+            "headers": {
+              "apikey": "$AGENT_BOARD_ANON_KEY",
+              "Authorization": "Bearer $AGENT_BOARD_ANON_KEY"
+            },
+            "timeout": 5,
+            "allowedEnvVars": [
+              "AGENT_BOARD_ANON_KEY"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

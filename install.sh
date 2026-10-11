@@ -12,6 +12,18 @@ F=~/.claude/CLAUDE.md; touch "$F"
 awk '/^<!-- claude-setup:start -->$/{s=1} !s{print} /^<!-- claude-setup:end -->$/{s=0}' "$F" > "$F.tmp"
 { cat "$F.tmp"; echo '<!-- claude-setup:start -->'; cat "$DIR/CLAUDE.md"; echo '<!-- claude-setup:end -->'; } > "$F"
 rm "$F.tmp"
+# 에이전트 현황판 훅(Personal_Dashboard): ~/.claude/settings.json에 합친다. 예전 report_status 훅은 빼고 다시 넣어 여러 번 실행해도 하나만 남는다.
+# anon 키는 레포(공개)에 두지 않고 환경변수 AGENT_BOARD_ANON_KEY로 받는다. 없으면 보고만 401로 실패하고 세션은 그대로 돈다.
+python3 - "$DIR/settings/agent-board-hooks.json" <<'EOF' || true
+import json, os, sys
+p = os.path.expanduser('~/.claude/settings.json')
+s = json.load(open(p)) if os.path.exists(p) else {}
+hooks = s.setdefault('hooks', {})
+for ev, groups in json.load(open(sys.argv[1]))['hooks'].items():
+    hooks[ev] = [g for g in hooks.get(ev, []) if 'report_status' not in json.dumps(g)] + groups
+json.dump(s, open(p + '.tmp', 'w'), ensure_ascii=False, indent=2)
+os.replace(p + '.tmp', p)
+EOF
 claude plugin marketplace add DietrichGebert/ponytail 2>/dev/null || true
 claude plugin install ponytail@ponytail --scope user 2>/dev/null || true
 claude plugin marketplace add anthropics/claude-plugins-official 2>/dev/null || true

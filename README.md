@@ -80,6 +80,14 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | productivity (knowledge-work-plugins) | memory-management 스킬이 CLAUDE.md·memory/에 기억을 써서 second-brain 규칙과 겹침 |
 | claude-mem, OmniRoute, Headroom, task-observer | 클라우드 컨테이너는 세션이 끝나면 지워지거나 로컬 프록시가 필요해 맞지 않음. 로컬 PC 전용으로는 고려 가능 |
 
+## 설정 훅 (`settings/`)
+
+`install.sh`가 `~/.claude/settings.json`의 `hooks`에 합친다. 다시 실행해도 하나만 남고, 다른 설정·훅은 그대로 둔다.
+
+| 파일 | 설명 |
+|---|---|
+| agent-board-hooks.json | 에이전트 현황판(`Personal_Dashboard`). 세션 시작·질문·대기·완료·오류·종료 때 상태를 Supabase `report_status()`에 보낸다. 이 레포가 공개라 anon 키는 넣지 않고 환경변수 `AGENT_BOARD_ANON_KEY`로 받는다. 클라우드는 환경 설정의 환경변수에 넣는다. 변수가 없는 환경의 세션은 현황판에 안 나올 뿐 작업은 그대로 된다 |
+
 ## 한국 기준 플레이북 (`korea/`)
 
 legal·finance 플러그인은 원래 미국 기준(미국 주법, US GAAP·SOX)이다. `install.sh`가 `korea/legal.local.md`·`korea/finance.local.md`를 `~/.claude/`에 넣고, 전역 규칙(CLAUDE.md)이 이 파일을 기본 플레이북으로 읽게 한다. 프로젝트 `.claude/`에 같은 이름의 파일이 있으면 그쪽이 우선이다.
