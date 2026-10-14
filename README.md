@@ -34,6 +34,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | find-skills | "이런 걸 하는 스킬 있어?"라고 물으면 skills.sh에서 찾아 설치 횟수·출처를 확인하고 추천·설치 (vercel-labs/skills) |
 | mcp-builder | Python(FastMCP)·TypeScript로 MCP 서버 만들기 안내와 평가 스크립트 (anthropics/skills) |
 | arena | 답이 마음에 안 들 때 `/arena --quick 과제`. 서브에이전트들이 같은 과제를 서로 다른 전략으로 풀고, 공격·방어·심판 채점 토너먼트로 하나만 남긴다. 기본은 100명(서브에이전트 595회 호출)이라 평소엔 `--quick`(16명, 91회). 파일을 현재 폴더 `.arena/`에 쓰므로 수정 자동 승인 모드 권장. Python 3 필요 (Jakeschincariol/arena-skill, MIT) |
+| triple-review | "코드 리뷰해"라고 하면 `code-review`(버그)·`ponytail-review`(과한 코드)·Codex review(다른 모델)를 같은 대상에 돌려 하나의 보고서로 합친다. 같은 지적은 묶어 찾은 리뷰어를 표시하고, 리뷰어끼리 엇갈리면 「의견 갈림」으로 모은다. 리뷰만 하고 고치지 않는다. Codex는 로그인이 안 돼 있으면 건너뛴다 |
 
 ## 에이전트 (`agents/`)
 
@@ -76,7 +77,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 ## 겹치는 것
 
-- **코드 리뷰:** `code-review`(기본, 버그), `ponytail-review`(과한 설계), `superpowers:requesting-code-review`, `/codex:review`(다른 모델의 시각). 원하는 쪽을 이름으로 부를 것.
+- **코드 리뷰:** 그냥 "코드 리뷰해"면 `triple-review`가 `code-review`(버그)·`ponytail-review`(과한 설계)·`/codex:review`(다른 모델의 시각)를 합쳐 돌린다. 하나만 원하면 그 이름으로 부를 것. `superpowers:requesting-code-review`는 따로.
 - **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검, ui-ux-pro-max는 스타일·팔레트·폰트 데이터 검색, hallmark는 기존 사이트 디자인 분석(`study`)이 강점. ui-ux-pro-max의 `design`·`ui-ux-pro-max` 스킬과 hallmark, design-taste-frontend는 impeccable과 범위가 겹친다.
 
 ## 넣었다가 뺀 것
