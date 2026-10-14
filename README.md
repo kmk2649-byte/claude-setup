@@ -54,6 +54,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | claude-code-setup | claude-plugins-official | 코드베이스를 분석해 훅·스킬·MCP·서브에이전트 추천 |
 | ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
 | marketing·sales·legal | anthropics/knowledge-work-plugins | 마케팅(콘텐츠·캠페인·SEO 등 8), 영업(딜·파이프라인·콜 준비 등 38), 법무(계약 검토·NDA·컴플라이언스 등 9) 스킬. 함께 등록되는 원격 MCP(HubSpot·Salesforce·DocuSign 등)는 각각 로그인해야 쓰이고, 클라우드에서는 '인증 필요'로만 보인다 |
+| codex | openai/codex-plugin-cc | Claude Code 안에서 Codex에 리뷰·작업 맡기기. `/codex:setup`(준비 상태 확인), `/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:status`·`result`·`cancel`. 아래 codex CLI와 로그인이 필요하다. 끝날 때 Codex 리뷰를 거치게 하는 훅은 기본 꺼짐(`/codex:setup --enable-review-gate`로 켬) |
 
 ## MCP
 
@@ -75,7 +76,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 ## 겹치는 것
 
-- **코드 리뷰:** `code-review`(기본, 버그), `ponytail-review`(과한 설계), `superpowers:requesting-code-review`. 원하는 쪽을 이름으로 부를 것.
+- **코드 리뷰:** `code-review`(기본, 버그), `ponytail-review`(과한 설계), `superpowers:requesting-code-review`, `/codex:review`(다른 모델의 시각). 원하는 쪽을 이름으로 부를 것.
 - **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검, ui-ux-pro-max는 스타일·팔레트·폰트 데이터 검색, hallmark는 기존 사이트 디자인 분석(`study`)이 강점. ui-ux-pro-max의 `design`·`ui-ux-pro-max` 스킬과 hallmark, design-taste-frontend는 impeccable과 범위가 겹친다.
 
 ## 넣었다가 뺀 것
