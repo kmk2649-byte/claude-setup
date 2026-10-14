@@ -67,6 +67,12 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 |---|---|
 | QuantConnect | https://claude.ai/customize/connectors 에서 커스텀 커넥터 추가 → URL `https://www.quantconnect.com/api/v2/mcp` → Connect 후 조직 선택·Authorize → 새 세션. 조직에 유료 agent node(A1-1 이상)가 필요하다. PC·SSH 터미널에서만 쓸 때는 `claude mcp add --transport http --scope user quantconnect https://www.quantconnect.com/api/v2/mcp` 후 `/mcp`로 로그인 |
 
+## CLI 도구
+
+| 도구 | 설명 |
+|---|---|
+| codex | OpenAI Codex CLI (`@openai/codex`, npm 전역 설치, 약 430MB). 이미 있으면 건너뛴다. 쓰려면 `codex login`(ChatGPT 계정) 또는 환경변수 `OPENAI_API_KEY`가 필요하다. 이 레포가 공개라 키는 넣지 않고, 클라우드는 환경 설정의 환경변수에 넣는다 |
+
 ## 겹치는 것
 
 - **코드 리뷰:** `code-review`(기본, 버그), `ponytail-review`(과한 설계), `superpowers:requesting-code-review`. 원하는 쪽을 이름으로 부를 것.
