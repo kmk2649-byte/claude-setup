@@ -37,6 +37,8 @@ claude plugin marketplace add openai/codex-plugin-cc 2>/dev/null || true
 claude plugin install codex@openai-codex --scope user 2>/dev/null || true
 # OpenAI Codex CLI. 이미 있으면 건너뜀(약 430MB)
 command -v codex >/dev/null || npm install -g @openai/codex >/dev/null 2>&1 || true
+# codex는 OPENAI_API_KEY 환경변수를 로그인으로 쓰지 않음 → 키가 있고 로그인 안 됐으면 키로 로그인
+if [ -n "$OPENAI_API_KEY" ] && command -v codex >/dev/null && ! codex login status >/dev/null 2>&1; then printenv OPENAI_API_KEY | codex login --with-api-key >/dev/null 2>&1 || true; fi
 # 화면 없는 Linux(SSH 서버·클라우드) → headless, root → 샌드박스 끔, 클라우드 → 내장 Chromium
 PW_ARGS=""
 if [ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then

@@ -45,7 +45,11 @@ argument-hint: "[PR 번호 | 브랜치 | --base <ref>]"
 CC=$(ls -d ~/.claude/plugins/cache/openai-codex/codex/*/scripts/codex-companion.mjs 2>/dev/null | sort -V | tail -1); [ -n "$CC" ] && node "$CC" setup --json || echo "codex plugin not installed"
 ```
 
-- 플러그인이 없거나 `codex.available`·`auth.loggedIn`이 false면 Codex는 건너뛴다. 이유를 보고서 끝에 적는다(로그인 안 됨이면 "`codex login` 또는 `OPENAI_API_KEY` 필요").
+- `auth.loggedIn`이 false인데 환경변수 `OPENAI_API_KEY`가 있으면, 키로 로그인한 뒤 준비 확인을 한 번 더 한다(codex는 이 환경변수를 로그인으로 쓰지 않는다). 키 값은 출력하지 않는다.
+  ```bash
+  [ -n "$OPENAI_API_KEY" ] && printenv OPENAI_API_KEY | codex login --with-api-key >/dev/null 2>&1 && codex login status
+  ```
+- 그래도 플러그인이 없거나 `codex.available`·`auth.loggedIn`이 false면 Codex는 건너뛴다. 이유를 보고서 끝에 적는다(로그인 안 됨이면 "`codex login` 또는 환경변수 `OPENAI_API_KEY` 필요").
 - 준비됐으면 Bash를 `run_in_background: true`로 실행한다. 몇 분 걸린다.
   ```bash
   cd "<DIR>" && CC=$(ls -d ~/.claude/plugins/cache/openai-codex/codex/*/scripts/codex-companion.mjs | sort -V | tail -1) && node "$CC" review --wait <Codex 인자>
