@@ -45,12 +45,13 @@ argument-hint: "[PR 번호 | 브랜치 | --base <ref>]"
 CC=$(ls -d ~/.claude/plugins/cache/openai-codex/codex/*/scripts/codex-companion.mjs 2>/dev/null | sort -V | tail -1); [ -n "$CC" ] && node "$CC" setup --json || echo "codex plugin not installed"
 ```
 
-- `auth.loggedIn`이 false인데 환경변수 `OPENAI_API_KEY`가 있으면, 키로 로그인한 뒤 준비 확인을 한 번 더 한다(codex는 이 환경변수를 로그인으로 쓰지 않는다). 키 값은 출력하지 않는다.
-  ```bash
-  [ -n "$OPENAI_API_KEY" ] && printenv OPENAI_API_KEY | codex login --with-api-key >/dev/null 2>&1 && codex login status
-  ```
-- 그래도 플러그인이 없거나 `codex.available`·`auth.loggedIn`이 false면 Codex는 건너뛴다. 이유를 보고서 끝에 적는다(로그인 안 됨이면 "`codex login` 또는 환경변수 `OPENAI_API_KEY` 필요").
-- 준비됐으면 Bash를 `run_in_background: true`로 실행한다. 몇 분 걸린다.
+- 플러그인이 없거나 `codex.available`이 false면 Codex는 건너뛰고 이유를 보고서 끝에 적는다.
+- `auth.loggedIn`이 false면 ChatGPT 계정 기기 코드 로그인을 시작한다. API 키로 로그인하지 않는다.
+  1. Bash를 `run_in_background: true`로: `codex login --device-auth > ~/.codex/device-login.log 2>&1`
+  2. 코드가 나올 때까지 기다렸다가 읽는다: `for i in $(seq 30); do grep -q -E 'https://|rror' ~/.codex/device-login.log && break; sleep 1; done; sed 's/\x1b\[[0-9;]*m//g' ~/.codex/device-login.log`
+  3. 사용자에게 주소와 코드를 보여 준다: "https://auth.openai.com/codex/device 에서 코드 `XXXX-XXXXX` 입력(15분 안)". 기다리지 말고 3으로 가서 Claude 리뷰를 진행한다.
+  4. 로그인 작업이 끝났다는 알림이 오면 `codex login status`로 확인하고, 아래 리뷰를 시작한다. 실패했거나 코드가 만료됐으면 Codex는 건너뛴다(보고서에 "건너뜀: Codex — 로그인 안 됨").
+- 준비됐으면(또는 로그인이 끝나면) Bash를 `run_in_background: true`로 실행한다. 몇 분 걸린다.
   ```bash
   cd "<DIR>" && CC=$(ls -d ~/.claude/plugins/cache/openai-codex/codex/*/scripts/codex-companion.mjs | sort -V | tail -1) && node "$CC" review --wait <Codex 인자>
   ```
@@ -68,7 +69,7 @@ Skill 도구로 차례로 부른다. 둘 다 인자로 1에서 정한 폴더(`DI
 
 ## 4. 합치기
 
-Codex가 끝날 때까지 기다린 뒤(백그라운드 작업 완료 알림), 출력 원문을 읽는다. 실패했으면 이유를 기억하고 둘로만 합친다.
+Codex가 끝날 때까지 기다린 뒤(백그라운드 작업 완료 알림), 출력 원문을 읽는다. 로그인을 기다리는 중이면 로그인이 끝나거나 실패할 때까지 기다린다. 실패했으면(한도 초과 포함) 이유를 기억하고 둘로만 합친다.
 
 ```
 ## 코드 리뷰 (3개 시각)
@@ -82,7 +83,7 @@ Codex가 끝날 때까지 기다린 뒤(백그라운드 작업 완료 알림), �
 - utils.ts 캐시: Codex는 필요하다, ponytail은 빼라. (내 판단: …)
 
 리뷰 안 됨: 작업 폴더의 커밋 안 된 변경 2개 파일
-건너뜀: Codex — 로그인 안 됨
+건너뜀: Codex — 로그인 안 됨 / 한도 초과
 ```
 
 - 같은 문제(같은 곳, 같은 원인)는 한 줄로 묶고, 찾은 리뷰어를 한 괄호 안에 `·`로 이어 적는다. 이름은 `버그`(code-review), `과한 코드`(ponytail-review), `Codex`. 예: `[버그·Codex]`.

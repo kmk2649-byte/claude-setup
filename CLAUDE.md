@@ -6,3 +6,4 @@
 - 스킬·플러그인·MCP 설치: 사용자가 설치 명령(`npx skills add`, 설치 스크립트, 플러그인·MCP 추가 등)을 주면, 낯선 패키지는 먼저 npm·GitHub에서 출처를 확인하고 실행한다. 설치 뒤 실제로 생긴 것(크기, 훅, 권한, 따로 필요한 프로그램, 이미 있는 스킬·플러그인과 겹치는지)을 보고하고, "설정에 영구 추가 / 이 세션에서만 / 취소" 중 고르게 한다. 영구 추가면 `kmk2649-byte/claude-setup`(다른 레포 세션이면 `add_repo`로 붙임)의 README "추가·삭제할 때" 절차대로 옮기고 README 표를 고쳐 PR을 만들어 머지한다. 취소면 설치로 생긴 파일을 모두 지운다.
 - 법무·재무 플러그인은 한국 기준: `legal:*`·`finance:*` 스킬을 쓸 때 대한민국 법과 K-IFRS(비상장·비외감이라고 하면 일반기업회계기준), 원화, 내부회계관리제도를 기본으로 한다. 플레이북은 프로젝트 `.claude/legal.local.md`·`.claude/finance.local.md`를 먼저, 없으면 `~/.claude/legal.local.md`·`~/.claude/finance.local.md`를 읽는다. 기준서 문단은 MyKIFRS, 공시는 MyDART, 감독기관 자료는 MyFSS로 확인해 출처를 적고, 법령 조문은 확신이 없으면 「현행 조문 확인 필요」라고 표시한다. 미국 법·US GAAP·SOX는 사용자가 요청하거나 상대방이 해외일 때만 쓴다.
 - 코드 리뷰: 리뷰어를 지정하지 않은 코드 리뷰 요청은 `triple-review` 스킬로 한다.
+- Codex 로그인: Codex(`codex:*` 명령·에이전트, triple-review)를 쓸 때 `codex login status`가 실패하면 `codex login --device-auth`를 백그라운드로 시작해 주소와 코드를 보여 주고, 로그인되면 이어 간다. API 키로 로그인하지 않는다.

@@ -73,7 +73,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 | 도구 | 설명 |
 |---|---|
-| codex | OpenAI Codex CLI (`@openai/codex`, npm 전역 설치, 약 430MB). 이미 있으면 건너뛴다. 쓰려면 로그인이 필요하다: `codex login`(ChatGPT 계정) 또는 API 키. codex는 환경변수 `OPENAI_API_KEY`를 그대로 쓰지 않아서, 키가 있고 로그인이 안 돼 있으면 `install.sh`가 그 키로 `codex login --with-api-key`를 해 둔다. 이 레포가 공개라 키는 넣지 않고, 클라우드는 환경 설정의 환경변수에 넣는다 |
+| codex | OpenAI Codex CLI (`@openai/codex`, npm 전역 설치, 약 430MB). 이미 있으면 건너뛴다. ChatGPT 계정으로 로그인해서 쓴다(API 키 아님). 로그인은 컨테이너에만 남아 세션마다 다시 해야 하므로, Codex를 쓸 때 로그인이 안 돼 있으면 Claude가 `codex login --device-auth`를 시작해 주소와 코드를 보여 준다. 코드만 입력하면 된다 |
 
 ## 겹치는 것
 
