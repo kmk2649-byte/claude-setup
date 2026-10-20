@@ -40,10 +40,39 @@ def thought(path):
     return None
 
 
+def home(p):
+    """층 이름이 될 폴더: 세션을 시작한 폴더(기록 첫 cwd)의 git 저장소 맨 위.
+    시작 폴더가 저장소가 아니면(여러 저장소를 붙인 클라우드 세션의 /home/user) 그 아래 가장 먼저 받은 저장소.
+    세션이 다른 저장소로 cd 해도 층이 바뀌지 않게 한다."""
+    start = None
+    try:
+        with open(p.get('transcript_path') or '', encoding='utf-8', errors='ignore') as f:
+            for _, line in zip(range(50), f):
+                if '"cwd"' in line:
+                    start = json.loads(line).get('cwd')
+                    break
+    except (OSError, ValueError):
+        pass
+    start = start or p.get('cwd') or ''
+    d = start
+    while d and d != os.path.dirname(d):
+        if os.path.isdir(os.path.join(d, '.git')):
+            return d
+        d = os.path.dirname(d)
+    try:
+        repos = [os.path.join(start, n) for n in os.listdir(start) if os.path.isdir(os.path.join(start, n, '.git'))]
+        if repos:
+            return min(repos, key=lambda r: (os.stat(os.path.join(r, '.git')).st_ctime, r))
+    except OSError:
+        pass
+    return start
+
+
 def slim(p):
     ti = p.get('tool_input')
     out = {k: p[k] for k in ('hook_event_name', 'session_id', 'cwd', 'tool_name', 'tool_use_id', 'agent_id',
                              'agent_type', 'message', 'prompt', 'error') if isinstance(p.get(k), str)}
+    out['cwd'] = home(p)
     if 'prompt' in out:
         out['prompt'] = out['prompt'][:200]
     if isinstance(ti, dict):
