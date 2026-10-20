@@ -35,6 +35,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | mcp-builder | Python(FastMCP)·TypeScript로 MCP 서버 만들기 안내와 평가 스크립트 (anthropics/skills) |
 | arena | 답이 마음에 안 들 때 `/arena --quick 과제`. 서브에이전트들이 같은 과제를 서로 다른 전략으로 풀고, 공격·방어·심판 채점 토너먼트로 하나만 남긴다. 기본은 100명(서브에이전트 595회 호출)이라 평소엔 `--quick`(16명, 91회). 파일을 현재 폴더 `.arena/`에 쓰므로 수정 자동 승인 모드 권장. Python 3 필요 (Jakeschincariol/arena-skill, MIT) |
 | court | 아이디어·계획이 괜찮은지 물을 때 `/court 아이디어`. 검사·변호 Claude가 논쟁하고, 서로 다른 관점의 배심원 12명이 따로 투표한 뒤 판사가 판결과 "무죄가 되려면 바꿀 것"을 정리한다(서브에이전트 17회, `--quick`은 6명·11회). 파일을 현재 폴더 `.court/`에 쓴다. Python 3 필요 (alexyc9381/court-skill, MIT) |
+| model-ladder | `/model-ladder 할 일` 로 큰 작업을 조각으로 나눠 모델 사다리(하이쿠→소넷→오퍼스→페이블)대로 맡긴다. 시작 전에 "누가 무엇을" 표를 보여 주고, 결과를 확인해 실패한 조각은 한 단계 위로 올린다. 평소 규칙은 전역 규칙과 `ladder-hook`이 항상 지키게 하고, 이 스킬은 큰 작업 때 확실히 나눠 하라고 부르는 용도 |
 | triple-review | "코드 리뷰해"라고 하면 `code-review`(버그)·`ponytail-review`(과한 코드)·Codex review(다른 모델)를 같은 대상에 돌려 하나의 보고서로 합친다. 같은 지적은 묶어 찾은 리뷰어를 표시하고, 리뷰어끼리 엇갈리면 「의견 갈림」으로 모은다. 리뷰만 하고 고치지 않는다. Codex는 로그인이 안 돼 있으면 건너뛴다 |
 | court | 아이디어·계획·주장을 재판에 올려 냉정한 반대 의견을 받는다. `/court --quick 아이디어`. 검사·변호가 서로 반박하고 배경이 다른 배심원이 각자 투표, 판사가 판결과 뒤집힐 조건을 낸다. 기본 배심원 12명(서브에이전트 17회), `--quick`은 6명. 현재 폴더 `.court/`에 기록. Python 3 필요 (alexyc9381/court-skill, MIT) |
 
