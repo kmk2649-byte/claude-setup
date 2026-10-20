@@ -16,7 +16,7 @@ rm "$F.tmp"
 # anon 키는 레포(공개)에 두지 않고 환경변수 AGENT_BOARD_ANON_KEY로 받는다. 없으면 보고만 401로 실패하고 세션은 그대로 돈다.
 cp "$DIR/settings/office-hook.py" "$DIR/settings/ladder-hook.py" ~/.claude/
 # 윈도우는 python3 가 없거나 스토어 안내용 가짜일 때가 많다 → 실제로 도는 것을 골라 훅 명령에도 그 이름을 쓴다
-PY=$(for p in python3 python py; do "$p" -c '' >/dev/null 2>&1 && { echo "$p"; break; }; done)
+PY=$(for p in python3 python py; do "$p" -c '' >/dev/null 2>&1 && { echo "$p"; break; }; done) || true
 [ -n "$PY" ] || echo "경고: 파이썬을 못 찾아 현황판·오피스·모델 사다리 훅을 설치하지 못했습니다(python.org 에서 설치 후 다시 실행)" >&2
 "${PY:-python3}" - "$PY" "$DIR/settings/agent-board-hooks.json" "$DIR/settings/office-hooks.json" "$DIR/settings/ladder-hooks.json" <<'EOF' || true
 import json, os, sys
