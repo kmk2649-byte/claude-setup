@@ -11,7 +11,7 @@ import sys
 import urllib.request
 
 URL = 'https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_office'
-KEEP = ('description', 'file_path', 'notebook_path', 'command', 'pattern', 'url', 'query', 'subagent_type')
+KEEP = ('description', 'file_path', 'notebook_path', 'command', 'pattern', 'url', 'query', 'subagent_type', 'model')
 
 
 def thought(path):
