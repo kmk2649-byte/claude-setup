@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &",
+            "command": "bash -c 'python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &'",
             "timeout": 5
           }
         ]
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &",
+            "command": "bash -c 'python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &'",
             "timeout": 5
           }
         ]
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &",
+            "command": "bash -c 'python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &'",
             "timeout": 5
           }
         ]
@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &",
+            "command": "bash -c 'python3 ~/.claude/office-hook.py 0<&0 >/dev/null 2>&1 &'",
             "timeout": 5
           }
         ]
