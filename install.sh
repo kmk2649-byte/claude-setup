@@ -15,17 +15,21 @@ rm "$F.tmp"
 # 에이전트 현황판·Claude 오피스 훅(Personal_Dashboard)·모델 사다리 훅: ~/.claude/settings.json에 합친다. 예전 report_status·report_office·office-hook 훅은 빼고 다시 넣어 여러 번 실행해도 하나만 남는다.
 # anon 키는 레포(공개)에 두지 않고 환경변수 AGENT_BOARD_ANON_KEY로 받는다. 없으면 보고만 401로 실패하고 세션은 그대로 돈다.
 cp "$DIR/settings/office-hook.py" "$DIR/settings/ladder-hook.py" ~/.claude/
-python3 - "$DIR/settings/agent-board-hooks.json" "$DIR/settings/office-hooks.json" "$DIR/settings/ladder-hooks.json" <<'EOF' || true
+# 윈도우는 python3 가 없거나 스토어 안내용 가짜일 때가 많다 → 실제로 도는 것을 골라 훅 명령에도 그 이름을 쓴다
+PY=$(for p in python3 python py; do "$p" -c '' >/dev/null 2>&1 && { echo "$p"; break; }; done)
+[ -n "$PY" ] || echo "경고: 파이썬을 못 찾아 현황판·오피스·모델 사다리 훅을 설치하지 못했습니다(python.org 에서 설치 후 다시 실행)" >&2
+"${PY:-python3}" - "$PY" "$DIR/settings/agent-board-hooks.json" "$DIR/settings/office-hooks.json" "$DIR/settings/ladder-hooks.json" <<'EOF' || true
 import json, os, sys
+py = sys.argv.pop(1)
 p = os.path.expanduser('~/.claude/settings.json')
-s = json.load(open(p)) if os.path.exists(p) else {}
+s = json.load(open(p, encoding='utf-8')) if os.path.exists(p) else {}
 hooks = s.setdefault('hooks', {})
 for ev in hooks:
     hooks[ev] = [g for g in hooks[ev] if not any(m in json.dumps(g) for m in ('report_status', 'report_office', 'office-hook', 'ladder-hook'))]
 for f in sys.argv[1:]:
-    for ev, groups in json.load(open(f))['hooks'].items():
+    for ev, groups in json.loads(open(f, encoding='utf-8').read().replace('python3 ~/', py + ' ~/'))['hooks'].items():
         hooks[ev] = hooks.get(ev, []) + groups
-json.dump(s, open(p + '.tmp', 'w'), ensure_ascii=False, indent=2)
+json.dump(s, open(p + '.tmp', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
 os.replace(p + '.tmp', p)
 EOF
 claude plugin marketplace add DietrichGebert/ponytail 2>/dev/null || true
