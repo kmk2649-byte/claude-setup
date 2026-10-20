@@ -67,6 +67,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | MCP | 설명 |
 |---|---|
 | playwright | 브라우저 자동화 (페이지 열기, 클릭, 입력, 스크린샷). 화면 없는 Linux(SSH 서버·클라우드)는 `--headless --browser chromium`, root면 `--no-sandbox`, 클라우드는 내장 Chromium을 쓴다 |
+| uplika | Uplika(`https://api.uplika.com/mcp`): 네이버 블로그·인스타 등 글 발행, 임시저장, 키워드 조사·리포트, 노출 점검, 성과. 터미널 Claude Code(먼더 디플린 직원 포함)에서 쓰려고 넣음. 설치 후 `claude` 실행 → `/mcp` → uplika → Authenticate로 한 번 로그인해야 한다. 로그인한 계정 권한 그대로라 **발행까지 가능**하니, 에이전트에게 발행 전 확인을 받으라고 정해 둘 것. Claude 앱·클라우드 세션은 claude.ai 커넥터로 따로 연결돼 있다 |
 
 `install.sh`에 넣지 않고 claude.ai 커넥터로 쓰는 MCP (로그인이 브라우저에서 필요해서, 한 번 연결하면 클라우드·데스크톱·웹 모두에서 쓸 수 있다):
 
