@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Claude 오피스 보고 (Personal_Dashboard web/office.html).
+
+훅 입력을 줄여 Supabase report_office(p)에 보낸다. 도구를 쓰기 직전(PreToolUse)이면
+세션 기록 끝에서 Claude가 마지막으로 한 생각·말을 꺼내 생각 구름으로 쓰게 한다.
+office-hooks.json이 백그라운드로 띄우므로 Claude는 기다리지 않는다. 실패해도 조용히 끝난다.
+"""
+import json
+import os
+import sys
+import urllib.request
+
+URL = 'https://ckxmzpqfjxwbqibfxvxu.supabase.co/rest/v1/rpc/report_office'
+KEEP = ('description', 'file_path', 'notebook_path', 'command', 'pattern', 'url', 'query', 'subagent_type')
+
+
+def thought(path):
+    """기록 끝 256KB에서 가장 최근 assistant의 생각·말 한 줄. 새 질문을 지나면 멈춘다(지난 턴 생각은 안 씀)."""
+    try:
+        with open(path, 'rb') as f:
+            f.seek(0, 2)
+            f.seek(max(0, f.tell() - 262144))
+            lines = f.read().decode('utf-8', 'ignore').splitlines()
+    except OSError:
+        return None
+    for line in reversed(lines):
+        try:
+            d = json.loads(line)
+        except ValueError:
+            continue
+        content = (d.get('message') or {}).get('content')
+        if d.get('type') == 'user' and isinstance(content, str):
+            return None
+        if d.get('type') != 'assistant' or not isinstance(content, list):
+            continue
+        for b in reversed(content):
+            text = (b.get('text') or b.get('thinking') or '').strip()
+            if text:
+                return ' '.join(text.split())[:100]
+    return None
+
+
+def slim(p):
+    ti = p.get('tool_input')
+    out = {k: p[k] for k in ('hook_event_name', 'session_id', 'cwd', 'tool_name', 'tool_use_id', 'agent_id',
+                             'agent_type', 'message', 'prompt', 'error') if isinstance(p.get(k), str)}
+    if 'prompt' in out:
+        out['prompt'] = out['prompt'][:200]
+    if isinstance(ti, dict):
+        out['tool_input'] = {k: str(ti[k])[:300] for k in KEEP if ti.get(k)}
+    if p.get('hook_event_name') == 'PreToolUse' and not p.get('agent_id') and p.get('transcript_path'):
+        out['thought'] = thought(p['transcript_path'])
+    return out
+
+
+def main():
+    key = os.environ.get('AGENT_BOARD_ANON_KEY')
+    if not key:
+        return
+    p = json.load(sys.stdin)
+    req = urllib.request.Request(URL, json.dumps({'p': slim(p)}).encode(), {
+        'apikey': key, 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json'})
+    urllib.request.urlopen(req, timeout=5).read()
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception:
+        pass
