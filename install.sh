@@ -12,15 +12,16 @@ F=~/.claude/CLAUDE.md; touch "$F"
 awk '/^<!-- claude-setup:start -->$/{s=1} !s{print} /^<!-- claude-setup:end -->$/{s=0}' "$F" > "$F.tmp"
 { cat "$F.tmp"; echo '<!-- claude-setup:start -->'; cat "$DIR/CLAUDE.md"; echo '<!-- claude-setup:end -->'; } > "$F"
 rm "$F.tmp"
-# 에이전트 현황판·Claude 오피스 훅(Personal_Dashboard): ~/.claude/settings.json에 합친다. 예전 report_status·report_office 훅은 빼고 다시 넣어 여러 번 실행해도 하나만 남는다.
+# 에이전트 현황판·Claude 오피스 훅(Personal_Dashboard): ~/.claude/settings.json에 합친다. 예전 report_status·report_office·office-hook 훅은 빼고 다시 넣어 여러 번 실행해도 하나만 남는다.
 # anon 키는 레포(공개)에 두지 않고 환경변수 AGENT_BOARD_ANON_KEY로 받는다. 없으면 보고만 401로 실패하고 세션은 그대로 돈다.
+cp "$DIR/settings/office-hook.py" ~/.claude/office-hook.py
 python3 - "$DIR/settings/agent-board-hooks.json" "$DIR/settings/office-hooks.json" <<'EOF' || true
 import json, os, sys
 p = os.path.expanduser('~/.claude/settings.json')
 s = json.load(open(p)) if os.path.exists(p) else {}
 hooks = s.setdefault('hooks', {})
 for ev in hooks:
-    hooks[ev] = [g for g in hooks[ev] if 'report_status' not in json.dumps(g) and 'report_office' not in json.dumps(g)]
+    hooks[ev] = [g for g in hooks[ev] if not any(m in json.dumps(g) for m in ('report_status', 'report_office', 'office-hook'))]
 for f in sys.argv[1:]:
     for ev, groups in json.load(open(f))['hooks'].items():
         hooks[ev] = hooks.get(ev, []) + groups

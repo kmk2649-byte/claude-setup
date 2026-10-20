@@ -100,7 +100,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | 파일 | 설명 |
 |---|---|
 | agent-board-hooks.json | 에이전트 현황판(`Personal_Dashboard`). 세션 시작·질문·대기·완료·오류·종료 때 상태를 Supabase `report_status()`에 보낸다. 이 레포가 공개라 anon 키는 넣지 않고 환경변수 `AGENT_BOARD_ANON_KEY`로 받는다. 클라우드는 환경 설정의 환경변수에 넣는다. 변수가 없는 환경의 세션은 현황판에 안 나올 뿐 작업은 그대로 된다 |
-| office-hooks.json | Claude 오피스(`Personal_Dashboard`의 `office.html`). 도구를 쓸 때마다 이벤트를 Supabase `report_office()`에 보낸다(파일 내용·명령 원문은 서버에서 버림). `curl`을 백그라운드로 띄워 작업을 기다리게 하지 않는다. 같은 `AGENT_BOARD_ANON_KEY`를 쓴다 |
+| office-hooks.json, office-hook.py | Claude 오피스(`Personal_Dashboard`의 `office.html`). 도구 사용 전후·실패·세션 이벤트마다 `office-hook.py`(→ `~/.claude/`)를 백그라운드로 띄워 작업을 기다리게 하지 않는다. 스크립트는 훅 입력에서 설명·파일 이름 같은 짧은 값만 남기고, 도구를 쓰기 직전이면 세션 기록 끝에서 Claude의 생각·말 앞부분 100자를 꺼내 생각 구름으로 보낸다(2026-10-20 사용자 승인). Supabase `report_office()`에 보내며 같은 `AGENT_BOARD_ANON_KEY`를 쓴다. `python3`가 없는 PC에서는 조용히 안 보낸다 |
 
 ## 한국 기준 플레이북 (`korea/`)
 
