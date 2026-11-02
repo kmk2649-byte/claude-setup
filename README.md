@@ -61,6 +61,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
 | marketing·sales·legal | anthropics/knowledge-work-plugins | 마케팅(콘텐츠·캠페인·SEO 등 8), 영업(딜·파이프라인·콜 준비 등 38), 법무(계약 검토·NDA·컴플라이언스 등 9) 스킬. 함께 등록되는 원격 MCP(HubSpot·Salesforce·DocuSign 등)는 각각 로그인해야 쓰이고, 클라우드에서는 '인증 필요'로만 보인다 |
 | codex | openai/codex-plugin-cc | Claude Code 안에서 Codex에 리뷰·작업 맡기기. `/codex:setup`(준비 상태 확인), `/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:status`·`result`·`cancel`. 아래 codex CLI와 로그인이 필요하다. 끝날 때 Codex 리뷰를 거치게 하는 훅은 기본 꺼짐(`/codex:setup --enable-review-gate`로 켬) |
+| effortless | HeyCubit/effortless | 프롬프트마다 reasoning effort를 자동으로 정하고(Haiku 판정, 프롬프트마다 Haiku 호출 1~2번 추가), 입력창 아래에 effort·컨텍스트 사용량·프롬프트 캐시 남은 시간을 보여 준다. 기본 compact도 Haiku로 한다. TypeSafe 키(`TYPESAFE_API_KEY`)를 넣으면 프롬프트 일부가 외부 판정기(Jev)로 나가므로 비워 둔다. 설정은 `/plugin configure effortless@effortless` |
 
 ## MCP
 
