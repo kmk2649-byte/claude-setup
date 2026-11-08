@@ -36,7 +36,8 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | arena | 답이 마음에 안 들 때 `/arena --quick 과제`. 서브에이전트들이 같은 과제를 서로 다른 전략으로 풀고, 공격·방어·심판 채점 토너먼트로 하나만 남긴다. 기본은 100명(서브에이전트 595회 호출)이라 평소엔 `--quick`(16명, 91회). 파일을 현재 폴더 `.arena/`에 쓰므로 수정 자동 승인 모드 권장. Python 3 필요 (Jakeschincariol/arena-skill, MIT) |
 | court | 아이디어·계획이 괜찮은지 물을 때 `/court 아이디어`. 검사·변호 Claude가 논쟁하고, 서로 다른 관점의 배심원 12명이 따로 투표한 뒤 판사가 판결과 "무죄가 되려면 바꿀 것"을 정리한다(서브에이전트 17회, `--quick`은 6명·11회). 파일을 현재 폴더 `.court/`에 쓴다. Python 3 필요 (alexyc9381/court-skill, MIT) |
 | model-ladder | `/model-ladder 할 일` 로 큰 작업을 조각으로 나눠 모델 사다리(하이쿠→소넷→오퍼스→페이블)대로 맡긴다. 시작 전에 "누가 무엇을" 표를 보여 주고, 결과를 확인해 실패한 조각은 한 단계 위로 올린다. 평소 규칙은 전역 규칙과 `ladder-hook`이 항상 지키게 하고, 이 스킬은 큰 작업 때 확실히 나눠 하라고 부르는 용도 |
-| triple-review | "코드 리뷰해"라고 하면 `code-review`(버그)·`ponytail-review`(과한 코드)·Codex review(다른 모델)를 같은 대상에 돌려 하나의 보고서로 합친다. 같은 지적은 묶어 찾은 리뷰어를 표시하고, 리뷰어끼리 엇갈리면 「의견 갈림」으로 모은다. 리뷰만 하고 고치지 않는다. Codex는 로그인이 안 돼 있으면 건너뛴다 |
+| modernize | 오래된 PR을 최신 기본 브랜치에 맞춰 rebase하고 충돌을 정리한다. "이 PR modernize해" (t3dotgg/tstack) |
+| takeover | 다른 사람·에이전트가 하던 PR·브랜치·작업을 넘겨받아 끝낸다. 원래 기여자 표기는 유지 (t3dotgg/tstack) |
 | court | 아이디어·계획·주장을 재판에 올려 냉정한 반대 의견을 받는다. `/court --quick 아이디어`. 검사·변호가 서로 반박하고 배경이 다른 배심원이 각자 투표, 판사가 판결과 뒤집힐 조건을 낸다. 기본 배심원 12명(서브에이전트 17회), `--quick`은 6명. 현재 폴더 `.court/`에 기록. Python 3 필요 (alexyc9381/court-skill, MIT) |
 
 ## 에이전트 (`agents/`)
@@ -84,7 +85,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 ## 겹치는 것
 
-- **코드 리뷰:** 그냥 "코드 리뷰해"면 `triple-review`가 `code-review`(버그)·`ponytail-review`(과한 설계)·`/codex:review`(다른 모델의 시각)를 합쳐 돌린다. 하나만 원하면 그 이름으로 부를 것. `superpowers:requesting-code-review`는 따로.
+- **코드 리뷰:** 그냥 "코드 리뷰해"면 전역 규칙대로 `code-review`(버그)·`ponytail-review`(과한 설계)를 함께 돌려 합친다. 다른 모델의 시각이 필요하면 `/codex:review`를 따로 부를 것. 하나만 원하면 그 이름으로 부를 것. `superpowers:requesting-code-review`는 따로.
 - **여러 에이전트 대결:** `arena`는 같은 과제의 여러 답 중 가장 좋은 답을 고르고, `court`는 아이디어 하나가 좋은지 나쁜지 판정한다.
 - **다른 관점 받기:** `/arena`는 같은 과제의 *답*을 여러 개 만들어 겨루게 하고, `/court`는 이미 정한 *아이디어*를 찬반으로 심사한다.
 - **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검, ui-ux-pro-max는 스타일·팔레트·폰트 데이터 검색, hallmark는 기존 사이트 디자인 분석(`study`)이 강점. ui-ux-pro-max의 `design`·`ui-ux-pro-max` 스킬과 hallmark, design-taste-frontend는 impeccable과 범위가 겹친다.
