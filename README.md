@@ -61,7 +61,6 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | claude-code-setup | claude-plugins-official | 코드베이스를 분석해 훅·스킬·MCP·서브에이전트 추천 |
 | ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
 | legal (marketing·sales는 전역에서 끔) | anthropics/knowledge-work-plugins | 법무(계약 검토·NDA·컴플라이언스 등 9) 스킬. marketing(8)·sales(38)는 매 턴 토큰을 먹어 전역에서 끄고, 쓰는 프로젝트의 `.claude/settings.json` `enabledPlugins`에 `"sales@knowledge-work-plugins": true`처럼 넣어 그 프로젝트에서만 켠다(새 세션부터 적용). 함께 등록되는 원격 MCP(HubSpot·Salesforce·DocuSign 등)는 각각 로그인해야 쓰이고, 클라우드에서는 '인증 필요'로만 보인다 |
-| codex | openai/codex-plugin-cc | Claude Code 안에서 Codex에 리뷰·작업 맡기기. `/codex:setup`(준비 상태 확인), `/codex:review`, `/codex:adversarial-review`, `/codex:rescue`, `/codex:status`·`result`·`cancel`. 아래 codex CLI와 로그인이 필요하다. 끝날 때 Codex 리뷰를 거치게 하는 훅은 기본 꺼짐(`/codex:setup --enable-review-gate`로 켬) |
 | effortless | HeyCubit/effortless | 프롬프트마다 reasoning effort를 자동으로 정하고(Haiku 판정, 프롬프트마다 Haiku 호출 1~2번 추가), 입력창 아래에 effort·컨텍스트 사용량·프롬프트 캐시 남은 시간을 보여 준다. 기본 compact도 Haiku로 한다. TypeSafe 키(`TYPESAFE_API_KEY`)를 넣으면 프롬프트 일부가 외부 판정기(Jev)로 나가므로 비워 둔다. 설정은 `/plugin configure effortless@effortless` |
 
 ## MCP
@@ -77,15 +76,9 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 |---|---|
 | QuantConnect | https://claude.ai/customize/connectors 에서 커스텀 커넥터 추가 → URL `https://www.quantconnect.com/api/v2/mcp` → Connect 후 조직 선택·Authorize → 새 세션. 조직에 유료 agent node(A1-1 이상)가 필요하다. PC·SSH 터미널에서만 쓸 때는 `claude mcp add --transport http --scope user quantconnect https://www.quantconnect.com/api/v2/mcp` 후 `/mcp`로 로그인 |
 
-## CLI 도구
-
-| 도구 | 설명 |
-|---|---|
-| codex | OpenAI Codex CLI (`@openai/codex`, npm 전역 설치, 약 430MB). 이미 있으면 건너뛴다. ChatGPT 계정으로 로그인해서 쓴다(API 키 아님). 로그인은 컨테이너에만 남아 세션마다 다시 해야 하므로, Codex를 쓸 때 로그인이 안 돼 있으면 Claude가 `codex login --device-auth`를 시작해 주소와 코드를 보여 준다. 코드만 입력하면 된다 |
-
 ## 겹치는 것
 
-- **코드 리뷰:** 그냥 "코드 리뷰해"면 전역 규칙대로 `code-review`(버그)·`ponytail-review`(과한 설계)를 함께 돌려 합친다. 다른 모델의 시각이 필요하면 `/codex:review`를 따로 부를 것. 하나만 원하면 그 이름으로 부를 것. `superpowers:requesting-code-review`는 따로.
+- **코드 리뷰:** 그냥 "코드 리뷰해"면 전역 규칙대로 `code-review`(버그)·`ponytail-review`(과한 설계)를 함께 돌려 합친다. 하나만 원하면 그 이름으로 부를 것. `superpowers:requesting-code-review`는 따로.
 - **여러 에이전트 대결:** `arena`는 같은 과제의 여러 답 중 가장 좋은 답을 고르고, `court`는 아이디어 하나가 좋은지 나쁜지 판정한다.
 - **다른 관점 받기:** `/arena`는 같은 과제의 *답*을 여러 개 만들어 겨루게 하고, `/court`는 이미 정한 *아이디어*를 찬반으로 심사한다.
 - **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검, ui-ux-pro-max는 스타일·팔레트·폰트 데이터 검색, hallmark는 기존 사이트 디자인 분석(`study`)이 강점. ui-ux-pro-max의 `design`·`ui-ux-pro-max` 스킬과 hallmark, design-taste-frontend는 impeccable과 범위가 겹친다.

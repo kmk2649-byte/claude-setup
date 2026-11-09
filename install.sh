@@ -43,12 +43,10 @@ claude plugin marketplace add anthropics/knowledge-work-plugins 2>/dev/null || t
 claude plugin install legal@knowledge-work-plugins --scope user 2>/dev/null || true
 # marketing·sales는 전역에서 끔(매 턴 기술 목록·인증 안 된 연결 서버가 붙어 토큰 낭비). 쓰는 프로젝트에서만 그 프로젝트 .claude/settings.json enabledPlugins로 켠다
 for p in marketing sales; do claude plugin disable $p@knowledge-work-plugins --scope user 2>/dev/null || true; done
-claude plugin marketplace add openai/codex-plugin-cc 2>/dev/null || true
-claude plugin install codex@openai-codex --scope user 2>/dev/null || true
+# Codex는 뺐다. 예전에 설치한 PC에서도 지운다(리뷰 때 Codex 로그인을 자꾸 요구해서)
+claude plugin uninstall codex@openai-codex --scope user 2>/dev/null || true
 claude plugin marketplace add HeyCubit/effortless 2>/dev/null || true
 claude plugin install effortless@effortless --scope user 2>/dev/null || true
-# OpenAI Codex CLI. 이미 있으면 건너뜀(약 430MB)
-command -v codex >/dev/null || npm install -g @openai/codex >/dev/null 2>&1 || true
 # 화면 없는 Linux(SSH 서버·클라우드) → headless, root → 샌드박스 끔, 클라우드 → 내장 Chromium
 PW_ARGS=""
 if [ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then
@@ -63,4 +61,4 @@ claude mcp remove --scope user playwright >/dev/null 2>&1 || true
 claude mcp add --scope user playwright -- npx @playwright/mcp@latest $PW_ARGS 2>/dev/null || true
 # Uplika(네이버 블로그·SNS 발행·키워드·노출). 이미 있으면 그대로 둔다. 로그인은 claude 실행 → /mcp → uplika 에서 한 번
 claude mcp add --transport http --scope user uplika https://api.uplika.com/mcp >/dev/null 2>&1 || true
-echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·legal·codex·effortless 플러그인, playwright·uplika MCP, codex CLI"
+echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·legal·effortless 플러그인, playwright·uplika MCP, codex CLI"
