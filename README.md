@@ -12,7 +12,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
   ```bash
   git clone https://github.com/kmk2649-byte/claude-setup ~/claude-setup 2>/dev/null || git -C ~/claude-setup pull; bash ~/claude-setup/install.sh
   ```
-  미리 필요한 것: `claude` 설치·로그인, Node.js, Python 3. 브라우저는 `install.sh`가 playwright 전용 Chromium을 받아 둔다. 브라우저가 시스템 라이브러리 없음으로 안 뜨면 `sudo npx -y playwright install-deps chromium`을 한 번 실행한다.
+  미리 필요한 것: `claude` 설치·로그인, Node.js, Python 3. 브라우저는 `install.sh`가 agent-browser CLI와 Chrome for Testing을 받아 둔다(화면 없는 Linux는 `--with-deps`로 시스템 라이브러리까지). 클라우드는 내장 Chromium을 쓴다.
 - **클라우드 세션:** 환경의 setup script가 이 레포 `main`의 `install.sh`를 실행한다. 새 세션부터 적용된다.
 
 > 설치 줄마다 `|| true`가 붙어 있어 실패해도 조용히 넘어간다. 새로 넣은 게 안 보이면 해당 명령을 직접 실행해 오류를 확인할 것.
@@ -36,6 +36,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | arena | 답이 마음에 안 들 때 `/arena --quick 과제`. 서브에이전트들이 같은 과제를 서로 다른 전략으로 풀고, 공격·방어·심판 채점 토너먼트로 하나만 남긴다. 기본은 100명(서브에이전트 595회 호출)이라 평소엔 `--quick`(16명, 91회). 파일을 현재 폴더 `.arena/`에 쓰므로 수정 자동 승인 모드 권장. Python 3 필요 (Jakeschincariol/arena-skill, MIT) |
 | court | 아이디어·계획이 괜찮은지 물을 때 `/court 아이디어`. 검사·변호 Claude가 논쟁하고, 서로 다른 관점의 배심원 12명이 따로 투표한 뒤 판사가 판결과 "무죄가 되려면 바꿀 것"을 정리한다(서브에이전트 17회, `--quick`은 6명·11회). 파일을 현재 폴더 `.court/`에 쓴다. Python 3 필요 (alexyc9381/court-skill, MIT) |
 | model-ladder | `/model-ladder 할 일` 로 큰 작업을 조각으로 나눠 모델 사다리(하이쿠→소넷→오퍼스→페이블)대로 맡긴다. 시작 전에 "누가 무엇을" 표를 보여 주고, 결과를 확인해 실패한 조각은 한 단계 위로 올린다. 평소 규칙은 전역 규칙과 `ladder-hook`이 항상 지키게 하고, 이 스킬은 큰 작업 때 확실히 나눠 하라고 부르는 용도 |
+| agent-browser | 브라우저 자동화 CLI(페이지 열기·클릭·입력·스크린샷·데이터 추출). 화면 요소를 `@e1` 같은 짧은 번호로 보여 줘 토큰이 적게 든다. 사용법은 `agent-browser skills get core`로 설치된 버전에 맞게 불러온다 (vercel-labs/agent-browser) |
 | modernize | 오래된 PR을 최신 기본 브랜치에 맞춰 rebase하고 충돌을 정리한다. "이 PR modernize해" (t3dotgg/tstack) |
 | takeover | 다른 사람·에이전트가 하던 PR·브랜치·작업을 넘겨받아 끝낸다. 원래 기여자 표기는 유지 (t3dotgg/tstack) |
 | court | 아이디어·계획·주장을 재판에 올려 냉정한 반대 의견을 받는다. `/court --quick 아이디어`. 검사·변호가 서로 반박하고 배경이 다른 배심원이 각자 투표, 판사가 판결과 뒤집힐 조건을 낸다. 기본 배심원 12명(서브에이전트 17회), `--quick`은 6명. 현재 폴더 `.court/`에 기록. Python 3 필요 (alexyc9381/court-skill, MIT) |
@@ -67,7 +68,6 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 | MCP | 설명 |
 |---|---|
-| playwright | 브라우저 자동화 (페이지 열기, 클릭, 입력, 스크린샷). 화면 없는 Linux(SSH 서버·클라우드)는 `--headless --browser chromium`, root면 `--no-sandbox`, 클라우드는 내장 Chromium을 쓴다 |
 | uplika | Uplika(`https://api.uplika.com/mcp`): 네이버 블로그·인스타 등 글 발행, 임시저장, 키워드 조사·리포트, 노출 점검, 성과. 터미널 Claude Code(먼더 디플린 직원 포함)에서 쓰려고 넣음. 설치 후 `claude` 실행 → `/mcp` → uplika → Authenticate로 한 번 로그인해야 한다. 로그인한 계정 권한 그대로라 **발행까지 가능**하니, 에이전트에게 발행 전 확인을 받으라고 정해 둘 것. Claude 앱·클라우드 세션은 claude.ai 커넥터로 따로 연결돼 있다 |
 
 `install.sh`에 넣지 않고 claude.ai 커넥터로 쓰는 MCP (로그인이 브라우저에서 필요해서, 한 번 연결하면 클라우드·데스크톱·웹 모두에서 쓸 수 있다):
@@ -87,7 +87,6 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 | 항목 | 뺀 이유 |
 |---|---|
-| agent-browser | playwright MCP와 기능이 같음 |
 | example-skills (anthropics/skills) | 디자인은 impeccable·design-taste-frontend로 충분하고, 나머지는 기본 스킬과 겹침 |
 | productivity (knowledge-work-plugins) | memory-management 스킬이 CLAUDE.md·memory/에 기억을 써서 second-brain 규칙과 겹침 |
 | claude-mem, OmniRoute, Headroom, task-observer | 클라우드 컨테이너는 세션이 끝나면 지워지거나 로컬 프록시가 필요해 맞지 않음. 로컬 PC 전용으로는 고려 가능 |
