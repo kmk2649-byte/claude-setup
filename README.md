@@ -26,6 +26,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | 스킬 | 설명 |
 |---|---|
 | impeccable | UI 디자인 종합 도구(v4.8.1). 디자인, 리디자인, 검토, 다듬기, 색·타이포·레이아웃·애니메이션, 접근성, 반응형. 파일 수정·세션 시작·종료 때 디자인 검출 훅이 돈다(`settings/impeccable-hooks.json`). 실행 파일(22MB)은 첫 실행 때 내려받는다 |
+| unslop | AI 티 나는 기존 화면을 고친다. 제품에서 방향을 찾은 뒤 간격→색→아이콘→문구→글꼴→레이아웃→세부→이미지→애니메이션 순서로 손보고, 히어로 이미지 생성·고치기 전후 영상(ffmpeg 필요)도 만든다 (heydamir/unslop, CC BY 4.0) |
 | design-taste-frontend | 템플릿 같지 않은 랜딩 페이지·포트폴리오 제작. 리디자인은 현재 상태 점검부터 |
 | emil-design-eng | Emil Kowalski의 UI 철학으로 컴포넌트·애니메이션·디테일 다듬기 |
 | web-design-guidelines | Vercel 웹 인터페이스 가이드라인으로 UI 코드 검토 (`파일:줄` 형식) |
@@ -81,7 +82,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 - **코드 리뷰:** 그냥 "코드 리뷰해"면 전역 규칙대로 `code-review`(버그)·`ponytail-review`(과한 설계)를 함께 돌려 합친다. 하나만 원하면 그 이름으로 부를 것. `superpowers:requesting-code-review`는 따로.
 - **여러 에이전트 대결:** `arena`는 같은 과제의 여러 답 중 가장 좋은 답을 고르고, `court`는 아이디어 하나가 좋은지 나쁜지 판정한다.
 - **다른 관점 받기:** `/arena`는 같은 과제의 *답*을 여러 개 만들어 겨루게 하고, `/court`는 이미 정한 *아이디어*를 찬반으로 심사한다.
-- **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검, ui-ux-pro-max는 스타일·팔레트·폰트 데이터 검색, hallmark는 기존 사이트 디자인 분석(`study`)이 강점. ui-ux-pro-max의 `design`·`ui-ux-pro-max` 스킬과 hallmark, design-taste-frontend는 impeccable과 범위가 겹친다.
+- **디자인:** impeccable이 가장 넓고, design-taste-frontend는 새 페이지 제작, web-design-guidelines는 규칙 점검, ui-ux-pro-max는 스타일·팔레트·폰트 데이터 검색, hallmark는 기존 사이트 디자인 분석(`study`)이 강점. 함께 쓸 때는 새로 만들기·방향 잡기는 hallmark, 기존 화면에서 AI 티 지우기는 unslop으로 나눈다(hallmark로 만든 뒤 unslop으로 마무리). ui-ux-pro-max의 `design`·`ui-ux-pro-max` 스킬과 hallmark, design-taste-frontend는 impeccable과 범위가 겹친다.
 
 ## 넣었다가 뺀 것
 
