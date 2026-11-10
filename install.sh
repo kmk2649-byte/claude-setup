@@ -47,18 +47,18 @@ for p in marketing sales; do claude plugin disable $p@knowledge-work-plugins --s
 claude plugin uninstall codex@openai-codex --scope user 2>/dev/null || true
 claude plugin marketplace add HeyCubit/effortless 2>/dev/null || true
 claude plugin install effortless@effortless --scope user 2>/dev/null || true
-# 화면 없는 Linux(SSH 서버·클라우드) → headless, root → 샌드박스 끔, 클라우드 → 내장 Chromium
-PW_ARGS=""
-if [ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then
-  # 서버엔 Google Chrome 이 없음 → playwright 전용 Chromium (MCP 버전에 맞는 것을 받아 둠)
-  PW_ARGS="--headless --browser chromium"
-  [ -x /opt/pw-browsers/chromium ] || npx -y -p @playwright/mcp@latest playwright install chromium >/dev/null 2>&1 || true
-fi
-[ "$(id -u)" = 0 ] && PW_ARGS="$PW_ARGS --no-sandbox"
-[ -x /opt/pw-browsers/chromium ] && PW_ARGS="$PW_ARGS --executable-path /opt/pw-browsers/chromium"
-# 다시 실행하면 옵션을 새로 맞추도록 지우고 등록
+# 브라우저 자동화: agent-browser CLI(약 130MB) + 스킬. playwright MCP는 뺐다(예전에 등록한 PC에서도 지운다)
 claude mcp remove --scope user playwright >/dev/null 2>&1 || true
-claude mcp add --scope user playwright -- npx @playwright/mcp@latest $PW_ARGS 2>/dev/null || true
+command -v agent-browser >/dev/null || npm install -g agent-browser >/dev/null 2>&1 || true
+if [ -x /opt/pw-browsers/chromium ]; then
+  # 클라우드엔 Chromium이 이미 있음 → 그걸 쓰게 설정(이미 설정 파일이 있으면 그대로 둔다)
+  mkdir -p ~/.agent-browser
+  [ -f ~/.agent-browser/config.json ] || echo '{"executablePath":"/opt/pw-browsers/chromium"}' > ~/.agent-browser/config.json
+else
+  # Chrome for Testing 받기. 화면 없는 Linux는 시스템 라이브러리까지
+  if [ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then agent-browser install --with-deps >/dev/null 2>&1 || true
+  else agent-browser install >/dev/null 2>&1 || true; fi
+fi
 # Uplika(네이버 블로그·SNS 발행·키워드·노출). 이미 있으면 그대로 둔다. 로그인은 claude 실행 → /mcp → uplika 에서 한 번
 claude mcp add --transport http --scope user uplika https://api.uplika.com/mcp >/dev/null 2>&1 || true
-echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·legal·effortless 플러그인, playwright·uplika MCP, codex CLI"
+echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·legal·effortless 플러그인, uplika MCP, agent-browser CLI"
