@@ -13,7 +13,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
   git clone https://github.com/kmk2649-byte/claude-setup ~/claude-setup 2>/dev/null || git -C ~/claude-setup pull; bash ~/claude-setup/install.sh
   ```
   미리 필요한 것: `claude` 설치·로그인, Node.js, Python 3. 브라우저는 `install.sh`가 agent-browser CLI와 Chrome for Testing을 받아 둔다(화면 없는 Linux는 `--with-deps`로 시스템 라이브러리까지). 클라우드는 내장 Chromium을 쓴다.
-- **클라우드 세션:** 환경의 setup script가 이 레포 `main`의 `install.sh`를 실행한다. 새 세션부터 적용된다.
+- **클라우드 세션:** 환경의 setup script가 이 레포 `main`의 `install.sh`를 실행한다. 클라우드는 그 결과를 저장해 두고 다음 세션부터 복원만 하므로, 세션 시작 훅(`settings/sync.sh`)이 `main`이 바뀌었는지 보고 바뀌었으면 `install.sh`를 다시 돌린다(바뀐 게 없으면 1초 안에 끝남). 로컬 PC도 같은 훅으로 자동 업데이트된다. 저장된 결과를 새로 만들려면 setup script에 아무 줄이나 바꾸면 된다.
 
 > 설치 줄마다 `|| true`가 붙어 있어 실패해도 조용히 넘어간다. 새로 넣은 게 안 보이면 해당 명령을 직접 실행해 오류를 확인할 것.
 
