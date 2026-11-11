@@ -25,7 +25,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 
 | 스킬 | 설명 |
 |---|---|
-| impeccable | UI 디자인 종합 도구(v4.8.2). 디자인, 리디자인, 검토, 다듬기, 색·타이포·레이아웃·애니메이션, 접근성, 반응형. 파일 수정·세션 시작·종료 때 디자인 검출 훅이 돈다(`settings/impeccable-hooks.json`). 실행 파일(22MB)은 첫 실행 때 내려받는다 (pbakaus/impeccable) |
+| impeccable | UI 디자인 종합 도구(v4.8.2). 디자인, 리디자인, 검토, 다듬기, 색·타이포·레이아웃·애니메이션, 접근성, 반응형. 디자인 검출 훅은 기본으로 끔(필요한 프로젝트에서만 `/impeccable hooks on`). 검출기 실행 파일(22MB)은 처음 쓸 때 내려받는다 (pbakaus/impeccable) |
 | unslop | AI 티 나는 기존 화면을 고친다. 제품에서 방향을 찾은 뒤 간격→색→아이콘→문구→글꼴→레이아웃→세부→이미지→애니메이션 순서로 손보고, 히어로 이미지 생성·고치기 전후 영상(ffmpeg 필요)도 만든다 (heydamir/unslop, CC BY 4.0) |
 | design-taste-frontend | 템플릿 같지 않은 랜딩 페이지·포트폴리오 제작. 리디자인은 현재 상태 점검부터 (Leonxlnx/taste-skill) |
 | emil-design-eng | Emil Kowalski의 UI 철학으로 컴포넌트·애니메이션·디테일 다듬기 (emilkowalski/skill) |
