@@ -38,7 +38,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | court | 아이디어·계획이 괜찮은지 물을 때 `/court 아이디어`. 검사·변호 Claude가 논쟁하고, 서로 다른 관점의 배심원 12명이 따로 투표한 뒤 판사가 판결과 "무죄가 되려면 바꿀 것"을 정리한다(서브에이전트 17회, `--quick`은 6명·11회). 파일을 현재 폴더 `.court/`에 쓴다. Python 3 필요 (alexyc9381/court-skill, MIT) |
 | model-ladder | `/model-ladder 할 일` 로 큰 작업을 조각으로 나눠 모델 사다리(하이쿠→소넷→오퍼스→페이블)대로 맡긴다. 시작 전에 "누가 무엇을" 표를 보여 주고, 결과를 확인해 실패한 조각은 한 단계 위로 올린다. 평소 규칙은 전역 규칙과 `ladder-hook`이 항상 지키게 하고, 이 스킬은 큰 작업 때 확실히 나눠 하라고 부르는 용도 |
 | agent-browser | 브라우저 자동화 CLI(페이지 열기·클릭·입력·스크린샷·데이터 추출). 화면 요소를 `@e1` 같은 짧은 번호로 보여 줘 토큰이 적게 든다. 사용법은 `agent-browser skills get core`로 설치된 버전에 맞게 불러온다 (vercel-labs/agent-browser) |
-| service-spec | `/service-spec 문제 한 줄`로 서로 ID로 연결된 기획 문서(개요·요구사항·기능명세·유저플로우·정책·화면설계·DB 스키마·QA 시트)를 레포 `docs/spec/`에 만든다. 수정은 제안→승인→반영→`CHANGELOG.md`, 구현은 코드에 `spec: FN-003` 주석으로 연결하고 테스트 결과를 QA 시트에 채운다. 명세↔코드 어긋남 점검 포함 (Babel AI 방식 참고, 자체 작성) |
+| service-spec | `/service-spec 문제 한 줄`(이미 있는 프로젝트면 코드를 읽어 거꾸로)로 서로 ID로 연결된 기획 문서(개요·요구사항·기능명세·유저플로우·정책·화면설계·DB 스키마·QA 시트)를 레포 `docs/spec/`에 만든다. 수정은 제안→승인→반영→`CHANGELOG.md`, 구현은 코드에 `spec: FN-003` 주석으로 연결하고 테스트 결과를 QA 시트에 채운다. 명세↔코드 어긋남 점검 포함 (Babel AI 방식 참고, 자체 작성) |
 | modernize | 오래된 PR을 최신 기본 브랜치에 맞춰 rebase하고 충돌을 정리한다. "이 PR modernize해" (t3dotgg/tstack) |
 | takeover | 다른 사람·에이전트가 하던 PR·브랜치·작업을 넘겨받아 끝낸다. 원래 기여자 표기는 유지 (t3dotgg/tstack) |
 | court | 아이디어·계획·주장을 재판에 올려 냉정한 반대 의견을 받는다. `/court --quick 아이디어`. 검사·변호가 서로 반박하고 배경이 다른 배심원이 각자 투표, 판사가 판결과 뒤집힐 조건을 낸다. 기본 배심원 12명(서브에이전트 17회), `--quick`은 6명. 현재 폴더 `.court/`에 기록. Python 3 필요 (alexyc9381/court-skill, MIT) |
