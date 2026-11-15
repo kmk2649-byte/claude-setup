@@ -24,6 +24,7 @@ import json, os, sys
 py = sys.argv.pop(1)
 p = os.path.expanduser('~/.claude/settings.json')
 s = json.load(open(p, encoding='utf-8')) if os.path.exists(p) else {}
+s.setdefault('effortLevel', 'medium')  # 메인 기본 effort. 사용자가 이미 정했으면 건드리지 않는다
 hooks = s.setdefault('hooks', {})
 for ev in hooks:
     hooks[ev] = [g for g in hooks[ev] if not any(m in json.dumps(g) for m in ('report_status', 'report_office', 'office-hook', 'ladder-hook', 'impeccable/scripts/impeccable', 'claude-setup-sync'))]
