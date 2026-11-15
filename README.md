@@ -67,7 +67,6 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | claude-code-setup | claude-plugins-official | 코드베이스를 분석해 훅·스킬·MCP·서브에이전트 추천 |
 | ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
 | legal (marketing·sales는 전역에서 끔) | anthropics/knowledge-work-plugins | 법무(계약 검토·NDA·컴플라이언스 등 9) 스킬. marketing(8)·sales(38)는 매 턴 토큰을 먹어 전역에서 끄고, 쓰는 프로젝트의 `.claude/settings.json` `enabledPlugins`에 `"sales@knowledge-work-plugins": true`처럼 넣어 그 프로젝트에서만 켠다(새 세션부터 적용). 함께 등록되는 원격 MCP(HubSpot·Salesforce·DocuSign 등)는 각각 로그인해야 쓰이고, 클라우드에서는 '인증 필요'로만 보인다 |
-| effortless | HeyCubit/effortless | 프롬프트마다 reasoning effort를 자동으로 정하고(Haiku 판정, 프롬프트마다 Haiku 호출 1~2번 추가), 입력창 아래에 effort·컨텍스트 사용량·프롬프트 캐시 남은 시간을 보여 준다. 기본 compact도 Haiku로 한다. TypeSafe 키(`TYPESAFE_API_KEY`)를 넣으면 프롬프트 일부가 외부 판정기(Jev)로 나가므로 비워 둔다. 설정은 `/plugin configure effortless@effortless` |
 
 ## MCP
 
