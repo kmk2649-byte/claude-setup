@@ -2,8 +2,9 @@
 """모델 사다리 강제 훅: 매 턴 규칙을 상기시키고, 메인 모델이 한 턴에 직접 많이 읽으면 경고한다."""
 import json, os, sys
 
-REMIND = ('모델 사다리(전역 규칙): 하위 작업은 성격에 맞는 단계로 바로 맡긴다(찾기·요약 haiku-helper, 정리·평범한 수정 sonnet, '
-          '설계·원인 분석 opus, 돈·보안 검토·막힌 버그 fable-expert), 실패하면 한 단계 위로. '
+REMIND = ('모델 사다리(전역 규칙): 하위 작업은 성격에 맞는 단계로 바로 맡긴다(찾기·요약 haiku-helper, 정리·작은 수정 sonnet-worker, '
+          '보통 수정·원인 분석 opus-worker, 설계·불명확 opus-deep, 돈·보안 검토 fable-expert). '
+          '실패하면 바로 올리되 빠뜨렸으면 effort를, 알고도 틀렸으면 다음 단계로. '
           '짧은 파일 1~3개·명령 하나는 직접, 긴 파일·여러 파일·긴 출력은 맡겨 요약만 받는다.')
 WARN_AT = (15000, 40000, 80000)  # 한 턴 안에서 메인이 직접 받은 도구 출력 글자 수
 
@@ -25,5 +26,5 @@ else:
     if not hit:
         sys.exit(0)
     msg = (f'경고: 이번 턴에 메인 모델이 도구 출력을 직접 약 {new:,}자 읽었다. 남은 읽기·요약은 '
-           'haiku-helper(정리가 필요하면 sonnet)에 맡기고 요약만 받아라. ' + REMIND)
+           'haiku-helper(정리가 필요하면 sonnet-worker)에 맡기고 요약만 받아라. ' + REMIND)
 print(json.dumps({'hookSpecificOutput': {'hookEventName': ev, 'additionalContext': msg}}, ensure_ascii=False))
