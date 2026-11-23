@@ -64,6 +64,11 @@ else
   if [ "$(uname)" = Linux ] && [ -z "$DISPLAY$WAYLAND_DISPLAY" ]; then agent-browser install --with-deps >/dev/null 2>&1 || true
   else agent-browser install >/dev/null 2>&1 || true; fi
 fi
+# stack-diagram PNG용: 한글 폰트(없으면 한글이 중국어 글꼴로 나옴)와 Python Playwright. 클라우드(apt·root)에서만
+if command -v apt-get >/dev/null && [ "$(id -u)" = 0 ]; then
+  fc-list :lang=ko 2>/dev/null | grep -q "CJK KR\|CJK JP\|Noto Sans CJK" || { apt-get update -qq >/dev/null 2>&1; apt-get install -y -qq fonts-noto-cjk >/dev/null 2>&1; } || true
+  python3 -c "import playwright" 2>/dev/null || pip install -q playwright >/dev/null 2>&1 || true
+fi
 # Uplika(네이버 블로그·SNS 발행·키워드·노출). 이미 있으면 그대로 둔다. 로그인은 claude 실행 → /mcp → uplika 에서 한 번
 claude mcp add --transport http --scope user uplika https://api.uplika.com/mcp >/dev/null 2>&1 || true
 echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·legal 플러그인, uplika MCP, agent-browser CLI"
