@@ -30,6 +30,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | design-taste-frontend | 템플릿 같지 않은 랜딩 페이지·포트폴리오 제작. 리디자인은 현재 상태 점검부터 (Leonxlnx/taste-skill) |
 | emil-design-eng | Emil Kowalski의 UI 철학으로 컴포넌트·애니메이션·디테일 다듬기 (emilkowalski/skill) |
 | web-design-guidelines | Vercel 웹 인터페이스 가이드라인으로 UI 코드 검토 (`파일:줄` 형식) (vercel-labs/agent-skills) |
+| stack-diagram | 기술 스택 한 문장으로 공식 로고가 들어간 아키텍처 다이어그램을 HTML·PNG(라이트·다크)·TSX로 만든다. AWS·GCP·Azure·k8s는 공식 아이콘. 로고 받기에 네트워크 필요, PNG는 Playwright, 한글 라벨은 `fonts-noto-cjk`가 있어야 제대로 나온다. 공개 갤러리 공유는 묻고 나서만 (caru-ini/stack-diagram, MIT) |
 | hallmark | 구조까지 다양하게 만드는 anti-AI-slop 디자인. 테마 21종, `audit`·`redesign`·`study`(URL·스크린샷에서 디자인 DNA 추출) (Nutlope/hallmark) |
 | graphify | 코드·문서·이미지를 지식 그래프로 만들어 구조와 관계를 질문 (safishamsi/graphify) |
 | find-skills | "이런 걸 하는 스킬 있어?"라고 물으면 skills.sh에서 찾아 설치 횟수·출처를 확인하고 추천·설치 (vercel-labs/skills) |
