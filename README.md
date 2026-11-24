@@ -67,6 +67,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | claude-code-setup | claude-plugins-official | 코드베이스를 분석해 훅·스킬·MCP·서브에이전트 추천 |
 | ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
 | legal (marketing·sales는 전역에서 끔) | anthropics/knowledge-work-plugins | 법무(계약 검토·NDA·컴플라이언스 등 9) 스킬. marketing(8)·sales(38)는 매 턴 토큰을 먹어 전역에서 끄고, 쓰는 프로젝트의 `.claude/settings.json` `enabledPlugins`에 `"sales@knowledge-work-plugins": true`처럼 넣어 그 프로젝트에서만 켠다(새 세션부터 적용). 함께 등록되는 원격 MCP(HubSpot·Salesforce·DocuSign 등)는 각각 로그인해야 쓰이고, 클라우드에서는 '인증 필요'로만 보인다 |
+| finance | anthropics/knowledge-work-plugins | 회계(분개·월말 결산·대사·재무제표·차이 분석·SOX 테스트 등 9) 스킬. 원래 US GAAP·SOX 기준이라 `korea/finance.local.md`(한국 기준 플레이북)로 덧씌워 쓴다. 함께 등록되는 BigQuery MCP는 클라우드에서 연결 실패로 보인다(쓰지 않으면 무시) |
 
 ## MCP
 
