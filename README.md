@@ -32,6 +32,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | web-design-guidelines | Vercel 웹 인터페이스 가이드라인으로 UI 코드 검토 (`파일:줄` 형식) (vercel-labs/agent-skills) |
 | stack-diagram | 기술 스택 한 문장으로 공식 로고가 들어간 아키텍처 다이어그램을 HTML·PNG(라이트·다크)·TSX로 만든다. AWS·GCP·Azure·k8s는 공식 아이콘. 로고 받기에 네트워크 필요, PNG는 Playwright, 한글 라벨은 `fonts-noto-cjk`가 있어야 제대로 나온다. 공개 갤러리 공유는 묻고 나서만. 로컬 수정: SKILL.md의 클라우드 업체별 규칙·공유 절차를 `references/vendors.md`·`share.md`로 빼서 절반으로 줄임(원본 업데이트 때 다시 나눌 것) (caru-ini/stack-diagram, MIT) |
 | hallmark | 구조까지 다양하게 만드는 anti-AI-slop 디자인. 테마 21종, `audit`·`redesign`·`study`(URL·스크린샷에서 디자인 DNA 추출) (Nutlope/hallmark) |
+| design-flow | 디자인 요청의 기본 진입점. 스킬 이름을 안 불러도 "디자인 검토해 줘·세련되게·AI 티 안 나게"면 이걸 탄다. ①방향(새 화면 impeccable, 기존 화면 unslop) ②재료(ui-ux-pro-max 팔레트·폰트 검색) ③디테일(emil-design-eng) ④다른 눈 비판(hallmark audit, 방향 요약 없이) ⑤최종 점검(web-design-guidelines + impeccable 최종 검토). 작은 수정은 ①⑤만, "전체 검토"면 전부. ③~⑤는 하위 에이전트라 무거운 설명서가 메인에 안 쌓인다 (자체 작성) |
 | graphify | 코드·문서·이미지를 지식 그래프로 만들어 구조와 관계를 질문 (safishamsi/graphify) |
 | find-skills | "이런 걸 하는 스킬 있어?"라고 물으면 skills.sh에서 찾아 설치 횟수·출처를 확인하고 추천·설치 (vercel-labs/skills) |
 | mcp-builder | Python(FastMCP)·TypeScript로 MCP 서버 만들기 안내와 평가 스크립트 (anthropics/skills) |
