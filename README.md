@@ -31,6 +31,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | emil-design-eng | Emil Kowalski의 UI 철학으로 컴포넌트·애니메이션·디테일 다듬기 (emilkowalski/skill) |
 | web-design-guidelines | Vercel 웹 인터페이스 가이드라인으로 UI 코드 검토 (`파일:줄` 형식) (vercel-labs/agent-skills) |
 | stack-diagram | 기술 스택 한 문장으로 공식 로고가 들어간 아키텍처 다이어그램을 HTML·PNG(라이트·다크)·TSX로 만든다. AWS·GCP·Azure·k8s는 공식 아이콘. 로고 받기에 네트워크 필요, PNG는 Playwright, 한글 라벨은 `fonts-noto-cjk`가 있어야 제대로 나온다. 공개 갤러리 공유는 묻고 나서만. 로컬 수정: SKILL.md의 클라우드 업체별 규칙·공유 절차를 `references/vendors.md`·`share.md`로 빼서 절반으로 줄임(원본 업데이트 때 다시 나눌 것) (caru-ini/stack-diagram, MIT) |
+| anatomy | 개념을 실제 기계로 바꿔 움직이는 아이소메트릭 SVG 설명도(HTML·React, WebGL·A4 PDF 선택)로 그린다. 한 장에 약 21만 토큰이라 직접 부를 때만(`/anatomy 개념`). Node 20.10+, 검사에 Chromium. 갤러리 공유는 요청할 때만. 로컬 수정: `disable-model-invocation: true` 추가(설명이 넓어 stack-diagram 요청을 가로채지 않게), 예제 PDF·`.github`·`tests` 삭제(원본 업데이트 때 다시 적용) (wheresryan22/anatomy, MIT) |
 | hallmark | 구조까지 다양하게 만드는 anti-AI-slop 디자인. 테마 21종, `audit`·`redesign`·`study`(URL·스크린샷에서 디자인 DNA 추출) (Nutlope/hallmark) |
 | design-flow | 디자인 요청의 기본 진입점. 스킬 이름을 안 불러도 "디자인 검토해 줘·세련되게·AI 티 안 나게"면 이걸 탄다. ①방향(새 화면 impeccable, 기존 화면 unslop) ②재료(ui-ux-pro-max 팔레트·폰트 검색) ③디테일(emil-design-eng) ④다른 눈 비판(hallmark audit, 방향 요약 없이) ⑤최종 점검(web-design-guidelines + impeccable 최종 검토). 작은 수정은 ①⑤만, "전체 검토"면 전부. ③~⑤는 하위 에이전트라 무거운 설명서가 메인에 안 쌓인다 (자체 작성) |
 | graphify | 코드·문서·이미지를 지식 그래프로 만들어 구조와 관계를 질문 (safishamsi/graphify) |
