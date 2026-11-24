@@ -45,6 +45,7 @@ claude plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill 2>/dev/null |
 claude plugin install ui-ux-pro-max@ui-ux-pro-max-skill --scope user 2>/dev/null || true
 claude plugin marketplace add anthropics/knowledge-work-plugins 2>/dev/null || true
 claude plugin install legal@knowledge-work-plugins --scope user 2>/dev/null || true
+claude plugin install finance@knowledge-work-plugins --scope user 2>/dev/null || true
 # marketing·sales는 전역에서 끔(매 턴 기술 목록·인증 안 된 연결 서버가 붙어 토큰 낭비). 쓰는 프로젝트에서만 그 프로젝트 .claude/settings.json enabledPlugins로 켠다
 for p in marketing sales; do claude plugin disable $p@knowledge-work-plugins --scope user 2>/dev/null || true; done
 # Codex는 뺐다. 예전에 설치한 PC에서도 지운다(리뷰 때 Codex 로그인을 자꾸 요구해서)
@@ -71,5 +72,5 @@ if command -v apt-get >/dev/null && [ "$(id -u)" = 0 ]; then
 fi
 # Uplika(네이버 블로그·SNS 발행·키워드·노출). 이미 있으면 그대로 둔다. 로그인은 claude 실행 → /mcp → uplika 에서 한 번
 claude mcp add --transport http --scope user uplika https://api.uplika.com/mcp >/dev/null 2>&1 || true
-echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·legal 플러그인, uplika MCP, agent-browser CLI"
+echo "완료: 전역 규칙(~/.claude/CLAUDE.md), 한국 기준 법무·재무 플레이북, 스킬 $(ls "$DIR"/skills | wc -l)개, 에이전트 $(ls "$DIR"/agents | wc -l)개, ponytail·superpowers·claude-code-setup·ui-ux-pro-max·legal·finance 플러그인, uplika MCP, agent-browser CLI"
 git -C "$DIR" rev-parse HEAD > ~/.claude/.claude-setup-rev 2>/dev/null || true

@@ -42,7 +42,6 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | service-spec | `/service-spec 문제 한 줄`(이미 있는 프로젝트면 코드를 읽어 거꾸로)로 서로 ID로 연결된 기획 문서(개요·요구사항·기능명세·유저플로우·정책·화면설계·DB 스키마·QA 시트)를 레포 `docs/spec/`에 만든다. 수정은 제안→승인→반영→`CHANGELOG.md`, 구현은 코드에 `spec: FN-003` 주석으로 연결하고 테스트 결과를 QA 시트에 채운다. 명세↔코드 어긋남 점검 포함. 전역 규칙으로 모든 프로젝트에 자동 적용(기능 작업 끝에 명세 동기화, 새 프로젝트는 명세부터) (Babel AI 방식 참고, 자체 작성) |
 | modernize | 오래된 PR을 최신 기본 브랜치에 맞춰 rebase하고 충돌을 정리한다. "이 PR modernize해" (t3dotgg/tstack) |
 | takeover | 다른 사람·에이전트가 하던 PR·브랜치·작업을 넘겨받아 끝낸다. 원래 기여자 표기는 유지 (t3dotgg/tstack) |
-| court | 아이디어·계획·주장을 재판에 올려 냉정한 반대 의견을 받는다. `/court --quick 아이디어`. 검사·변호가 서로 반박하고 배경이 다른 배심원이 각자 투표, 판사가 판결과 뒤집힐 조건을 낸다. 기본 배심원 12명(서브에이전트 17회), `--quick`은 6명. 현재 폴더 `.court/`에 기록. Python 3 필요 (alexyc9381/court-skill, MIT) |
 
 ## 에이전트 (`agents/`)
 
@@ -68,6 +67,7 @@ Claude Code 개인 설정 모음. 스킬·에이전트·플러그인·MCP를 `in
 | claude-code-setup | claude-plugins-official | 코드베이스를 분석해 훅·스킬·MCP·서브에이전트 추천 |
 | ui-ux-pro-max | nextlevelbuilder/ui-ux-pro-max-skill | 스타일·팔레트·폰트 조합·차트·스택별 가이드를 로컬 DB로 검색해 디자인 시스템 생성 (Python 3 필요). 배너·브랜드·슬라이드·shadcn/ui 스킬 포함 |
 | legal (marketing·sales는 전역에서 끔) | anthropics/knowledge-work-plugins | 법무(계약 검토·NDA·컴플라이언스 등 9) 스킬. marketing(8)·sales(38)는 매 턴 토큰을 먹어 전역에서 끄고, 쓰는 프로젝트의 `.claude/settings.json` `enabledPlugins`에 `"sales@knowledge-work-plugins": true`처럼 넣어 그 프로젝트에서만 켠다(새 세션부터 적용). 함께 등록되는 원격 MCP(HubSpot·Salesforce·DocuSign 등)는 각각 로그인해야 쓰이고, 클라우드에서는 '인증 필요'로만 보인다 |
+| finance | anthropics/knowledge-work-plugins | 회계(분개·월말 결산·대사·재무제표·차이 분석·SOX 테스트 등 9) 스킬. 원래 US GAAP·SOX 기준이라 `korea/finance.local.md`(한국 기준 플레이북)로 덧씌워 쓴다. 함께 등록되는 BigQuery MCP는 클라우드에서 연결 실패로 보인다(쓰지 않으면 무시) |
 
 ## MCP
 
